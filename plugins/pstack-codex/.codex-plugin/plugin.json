@@ -1,0 +1,24 @@
+{
+  "name": "pstack-codex",
+  "version": "0.1.1",
+  "description": "Port of poteto's pstack for Codex.",
+  "author": {
+    "name": "theomilll"
+  },
+  "homepage": "https://github.com/theomilll/pstack-codex",
+  "repository": "https://github.com/theomilll/pstack-codex",
+  "license": "MIT",
+  "keywords": ["pstack", "poteto-mode", "workflow", "principles", "subagents", "unslop"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Pstack Codex",
+    "shortDescription": "Rigorous Codex workflows, playbooks, and review skills.",
+    "longDescription": "Pstack Codex packages poteto's playbooks and principles for Codex-native skills, hooks, and subagent workflows.",
+    "developerName": "theomilll",
+    "category": "Productivity",
+    "capabilities": [],
+    "defaultPrompt": [
+      "Use pstack-codex to route this non-trivial coding task."
+    ]
+  }
+}
