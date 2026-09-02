@@ -1,6 +1,6 @@
 {
   "name": "pstack-codex",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Port of poteto's pstack for Codex.",
   "author": {
     "name": "theomilll"
@@ -19,6 +19,7 @@
     "capabilities": [],
     "defaultPrompt": [
       "Use pstack-codex to route this non-trivial coding task."
-    ]
+    ],
+    "logo": "./assets/logo.png"
   }
 }

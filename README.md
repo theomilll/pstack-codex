@@ -2,7 +2,7 @@
 
 Codex port of [poteto](https://x.com/poteto)'s
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) (upstream
-v0.14.5, `cursor/plugins@6fecddb`). The 23 playbooks and 21 principles are
+v0.14.7, `cursor/plugins@efa2a53`). The 23 playbooks and 21 principles are
 poteto's. This repository ports the harness to Codex's plugin, skill, hook,
 and subagent model. The upstream README is preserved at
 [README-UPSTREAM.md](./README-UPSTREAM.md). MIT, same as upstream.
@@ -60,6 +60,14 @@ that model, pstack stops instead of substituting another model.
 - There is no Codex equivalent of Claude's built-in `/simplify`. The port keeps
   the cleanup rule, but the simplification pass is done deliberately by the
   agent before commit.
+
+## Compatibility
+
+- Cursor `disable-model-invocation` is not shipped. Codex skills stay matchable
+  from `description`.
+- Cursor skill `paths` frontmatter is not shipped. Codex skill frontmatter is
+  `name` and `description` only.
+- The upstream plugin logo maps to Codex `interface.logo`.
 
 Everything else, including the playbook and principle content, is preserved as
 closely as the runtime allows. The exact mapping lives in

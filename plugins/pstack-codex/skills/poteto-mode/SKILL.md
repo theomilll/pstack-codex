@@ -241,7 +241,10 @@ instead.
 - **Eval.** Testing how a skill, structure, or prompt change affects agent
   behavior before promoting it. `playbooks/eval.md`.
 - **Babysit.** Driving a PR or a stack to merge-ready. `playbooks/babysit.md`.
-- **Shipping.** The half after Babysit. `playbooks/shipping.md`.
+- **Shipping.** The half after Babysit. Independently verifying a
+  green stack, then landing the contiguous verified run bottom-up
+  through `gh` by default or Origin when its CLI is available.
+  `playbooks/shipping.md`.
 - **Autonomous run.** A long task to drive to completion without stopping.
   `playbooks/autonomous-run.md`.
 - **Orchestrate.** A standing project handed to one coordinator task: multi-day,
@@ -250,7 +253,8 @@ instead.
 - **Autopilot-full.** A queue of independent PRs run to merged with full
   autonomy. `playbooks/autopilot-full.md`.
 - **Autopilot-stack.** A queue of changes built and verified with full
-  autonomy, delivered as one linear reviewed stack.
+  autonomy, delivered as one linear reviewed base-branch stack the
+  operator lands herself.
   `playbooks/autopilot-stack.md`.
 - **Session pickup.** Resuming or taking over a prior agent's in-flight work
   from a transcript, a task id, or a pushed branch.
