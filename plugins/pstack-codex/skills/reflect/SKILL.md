@@ -39,18 +39,20 @@ One message, three subagents, each with a read-only or explicit no-edit brief.
 Reviewers may need MCP access for context lookups. The prompt forbids file
 writes. The parent applies edits.
 
-| Lens | `model` | Prompt template |
-|---|---|---|
-| Judgment | `gpt-5.6-sol` | `references/judgment-reviewer.md` |
-| Tooling | `gpt-5.6-sol` | `references/tooling-reviewer.md` |
-| Divergent | `gpt-5.6-sol` in a fresh context | `references/divergent-reviewer.md` |
+Give each reviewer a fresh context. Follow `../poteto-mode/references/codex-delegation.md`.
+
+| Lens | Prompt template |
+|---|---|
+| Judgment | `references/judgment-reviewer.md` |
+| Tooling | `references/tooling-reviewer.md` |
+| Divergent | `references/divergent-reviewer.md` |
 
 Pass each template verbatim, substituting the transcript path or digest where
 marked. Reviewers return findings in the subagent response body.
 
 ### 3. Synthesize
 
-One `gpt-5.6-sol` synthesizer subagent. Give it a read-only or explicit no-edit
+One fresh synthesizer subagent. Give it a read-only or explicit no-edit
 brief. The synthesizer's
 quality check includes spot-verifying citations, which can require MCP access.
 Use `references/synthesizer.md` verbatim, with each reviewer's full output

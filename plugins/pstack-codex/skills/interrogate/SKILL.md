@@ -1,15 +1,16 @@
 ---
 name: interrogate
-description: "Use for \"interrogate\", \"adversarial review\", \"challenge this\", \"stress test this code\", \"find blind spots\", or \"tear this apart\". Multiple independent gpt-5.6-sol reviewers challenge changes from complementary angles."
+description: "Use for \"interrogate\", \"adversarial review\", \"challenge this\", \"stress test this code\", \"find blind spots\", or \"tear this apart\". Multiple independent reviewers challenge changes from complementary angles."
 ---
 
 # Interrogate
 
-Spawn three independent `gpt-5.6-sol` reviewers to adversarially review code
+Spawn three independent reviewers to adversarially review code
 changes. Give every reviewer the same intent, diff, rubric, and code-quality
 lens, plus one focus: correctness, maintainability, or adversarial edge cases.
-Agreement across independent reviews is high-signal. A finding from one
-reviewer is still worth reading but carries less weight.
+Agreement across independent reviews helps prioritize investigation, but
+shared blind spots can survive every pass. Judge each finding by its evidence;
+a single reviewer can uncover a decisive bug.
 
 The deliverable is a synthesized verdict. Do NOT auto-apply changes.
 
@@ -36,20 +37,14 @@ Write one clear paragraph. Reviewers challenge whether the work achieves the int
 
 ## Step 3, Spawn Reviewers
 
-Launch all three reviewers in a single message using Codex's native subagent
-flow. Use `gpt-5.6-sol` for every reviewer and a fresh context for each.
+Launch three reviewers using Codex's native subagent flow, each in a fresh
+context with a read-only or explicit no-edit brief. Follow `../poteto-mode/references/codex-delegation.md`.
 
-| Subagent | Default model |
-|----------|---------------|
-| Reviewer A | `gpt-5.6-sol` |
-| Reviewer B | `gpt-5.6-sol` |
-| Reviewer C | `gpt-5.6-sol` |
-
-For each reviewer:
-- use a read-only or explicit no-edit brief
-- use `gpt-5.6-sol`
-
-If `gpt-5.6-sol` is unavailable, stop. Do not substitute another model.
+| Reviewer | Additional focus |
+|----------|------------------|
+| A | Correctness and concrete execution paths |
+| B | Maintainability and boundary design |
+| C | Adversarial inputs and edge cases |
 
 Read `references/reviewer-prompt.md` and fill in the template with:
 1. The stated intent
@@ -57,7 +52,7 @@ Read `references/reviewer-prompt.md` and fill in the template with:
 3. The review rubric from `references/rubric.md`
 4. The code-quality lens from `references/code-quality-review.md`
 
-The same filled template goes to all reviewers, so every reviewer applies the code-quality lens.
+The same filled template goes to all reviewers, plus their assigned focus, so every reviewer applies the code-quality lens. Do not share other reviewers' findings before their independent passes finish.
 
 Each reviewer produces structured findings as described in the prompt template.
 
@@ -66,8 +61,8 @@ Each reviewer produces structured findings as described in the prompt template.
 As results come back, build a unified picture:
 
 1. **Parse all findings** from the reviewers
-2. **Identify consensus**. Findings raised by 2+ reviewers independently are highest signal.
-3. **Identify single-reviewer findings**. Still worth reading, but weight accordingly.
+2. **Identify agreement**. Note findings raised independently by multiple reviewers and verify the supporting evidence.
+3. **Identify single-reviewer findings**. Assess their evidence with the same bar; vote count does not determine correctness.
 4. **Deduplicate**. Reviewers may describe the same issue differently. Merge these and note which reviewers raised it.
 5. **Note disagreements**. If one reviewer flags something and another explicitly says the opposite, that's useful context for the verdict.
 
@@ -97,7 +92,7 @@ Present the verdict in this structure:
 > [The stated intent paragraph from Step 2]
 
 ### Reviewers
-- Reviewer [label]: `gpt-5.6-sol`, [N findings] (one bullet per reviewer)
+- Reviewer [label]: [focus], [N findings] (one bullet per reviewer)
 
 ### Act On
 [Findings that should be addressed. For each: description, which reviewers raised it, why it matters.]

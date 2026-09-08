@@ -63,9 +63,10 @@ Fix the log, not the story. If the work diverged from what a row claims, the row
 
 ## Independent review of the trail
 
-Before handing back, spawn a fresh `gpt-5.6-sol` subagent with a self-contained
+Before handing back, spawn a fresh subagent with a self-contained
 read-only brief. Self-review is not a substitute; the point is an independent
-context. The subagent reads the audit trail and the run's transcript, then flags
+context. Follow `../poteto-mode/references/codex-delegation.md`.
+The subagent reads the audit trail and the run's transcript, then flags
 what the user should pay attention to. This is a risk scan, not a redo.
 
 - Decisions logged with weak or absent evidence.
@@ -74,8 +75,8 @@ what the user should pay attention to. This is a risk scan, not a redo.
 - Gaps the user would otherwise miss on a casual skim.
 
 Every reply for a run that produced a trail ends with an "Attention" section.
-Lead with `reviewed by gpt-5.6-sol`, then list each flag pointing to specific
-rows or moments. "No flags" is a valid value. The self-audit asks if the log
+State whether an independent review actually ran, then list each flag pointing
+to specific rows or moments. If it could not run, name that verification gap. "No flags" is a valid value. The self-audit asks if the log
 told the truth; this asks what the user should still scrutinize even when it
 did.
 

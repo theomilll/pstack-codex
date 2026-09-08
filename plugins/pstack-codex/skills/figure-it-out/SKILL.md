@@ -29,8 +29,8 @@ Decompose into atomic, independently-landable units. Sequence riskiest-unknown-f
 
 - Build the verification harness before the work, with the baseline captured from the pre-change state, so the check reads as "old value vs new value".
 - For one-way-door design decisions, run the **architect** skill (it runs
-  **arena**) with diverse, isolated, opinionated `gpt-5.6-sol` candidates and
-  a fresh read-only `gpt-5.6-sol` judge. Skip it for mechanical work whose
+  **arena**) with isolated candidates exploring distinct design hypotheses and
+  a fresh read-only judge blinded to runner identities. Skip it for mechanical work whose
   shape is already concrete. A second arena over a settled design is
   over-engineering (the **laziness-protocol** principle skill).
 - Decide what fans out. Parallelize only across genuine seams, and give each worker its own worktree or branch (the **separate-before-serializing-shared-state** principle skill). Don't over-fan.

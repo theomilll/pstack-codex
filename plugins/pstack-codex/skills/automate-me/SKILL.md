@@ -34,10 +34,10 @@ inspection. If you must read local transcripts, search only under
 `${CODEX_HOME:-$HOME/.codex}/sessions/` for the exact current thread id. Do not
 glob unrelated sessions.
 
-Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Each slice mining subagent reads transcripts from the workspace-scoped path the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
+Survey recent agent conversations within that scope for recurring patterns. Run multiple parallel subagents across slices of history (e.g. last 2-4 weeks, split into 3 slices so each has enough material). Follow `../poteto-mode/references/codex-delegation.md`. Each slice mining subagent reads transcripts from the workspace-scoped path the parent provides, looks for the signals below, and returns a short structured list of patterns it saw with evidence pointers. Default signals worth hunting:
 
 - Response preferences (length, tone, format, "dumb it down" corrections)
-- Delegation habits (subagents, models, specialized workflows, parallelism)
+- Delegation habits (subagent scopes, specialized workflows, parallelism)
 - Verification posture (what "done" means; unit tests vs live repro; reviewers)
 - Code and prose discipline (style, principles cited, lint/format tools)
 - Process conventions (worktrees, commits, PRs, review/merge tooling)
@@ -62,7 +62,7 @@ Group the combined signals into sections. Common ones (use only what applies):
 - **Response style**: length, tone, format.
 - **Autonomy**: how much to do without asking; MCP tool use.
 - **Understand first**: which skills to reach for when scoping or investigating a change.
-- **Subagents**: default, parallelism, model-to-task, specialized workflows.
+- **Subagents**: when to delegate, parallelism, scopes, specialized workflows.
 - **Prose / code discipline**: principles, lint tools, style guides.
 - **Review and verify**: repro posture, verification skills, live-testing tools.
 - **Process**: git worktrees, commits, PRs, review/merge tooling.

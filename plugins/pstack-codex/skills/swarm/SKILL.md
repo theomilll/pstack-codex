@@ -21,14 +21,14 @@ Open a todolist with one entry per phase before launching anything.
 1. State the done predicate and the artifact or report the swarm must return.
 2. Choose the shape. Partition into slices, race N workers on identical briefs, or mix both. For a race or mixed shape, declare `first pass`, `rank all`, or `best-of` before spawning.
 3. Set N from the user or derive it from the shape. N is total workers, not the concurrent-agent cap.
-4. Use `gpt-5.6-sol` for every worker. For an approach race, name each arm's
-   approach up front.
+4. For an approach race, name each arm's approach or hypothesis up front and
+   give each worker a fresh context.
 5. Give each writer its own Git worktree and exact path. Read-only workers may share the checkout. A non-repository artifact can use `/tmp/swarm-<slug>/worker-<n>/`.
 
 ## Phase B: Fan out
 
-Spawn all N workers in one wave through Codex's native subagent tools. Select
-`gpt-5.6-sol` explicitly. For every writer, create the Git worktree before
+Spawn workers through Codex's native subagent tools, in waves when N exceeds
+the concurrency limit. For every writer, create the Git worktree before
 spawning and include its exact path in the brief. Follow
 `../poteto-mode/references/codex-delegation.md`.
 

@@ -10,7 +10,7 @@ Explore the codebase to answer "how does X work?" questions. Produce clear archi
 Two modes:
 
 1. **Explain** (default). Explore the codebase and produce a clear explanation
-2. **Critique.** Explain first, then spawn multiple models to independently identify architectural issues
+2. **Critique.** Explain first, then spawn independent reviewers to identify architectural issues
 
 ## Explain Mode
 
@@ -42,7 +42,7 @@ Decompose the question into 2-4 parallel exploration angles, each a distinct sli
 
 The right decomposition depends on the question. Use your judgment. Narrow questions: 2 explorers is fine. Broad subsystems: up to 4.
 
-Spawn all explorers in a single wave on `gpt-5.6-sol`. Use a read-only or
+Spawn all explorers in a single wave. Use a read-only or
 explicit no-edit brief for each explorer, per
 `../poteto-mode/references/codex-delegation.md`.
 
@@ -59,16 +59,16 @@ Then proceed to Step 3.
 
 ### Step 2b. Direct Explain (simple questions)
 
-Spawn a single `gpt-5.6-sol` subagent that explores and explains in one pass.
-Use a read-only or explicit no-edit brief.
+Explore and explain directly; a narrow question does not need a separate
+agent merely to change roles. Keep the pass read-only.
 
-The agent does its own exploration (Glob, Grep, Read) and writes the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
+Do the exploration (Glob, Grep, Read) and write the explanation directly. Read `references/explainer-prompt.md` for the communication style and output format. Same structure, just no explorer findings as input.
 
 Proceed to Step 4.
 
 ### Step 3. Synthesize (complex questions only)
 
-Once all explorers return, spawn a single `gpt-5.6-sol` subagent to synthesize
+Once all explorers return, spawn a fresh subagent to synthesize
 their findings into one coherent explanation. Use a read-only or explicit
 no-edit brief.
 
@@ -103,15 +103,10 @@ Run the full explain flow above (Steps 1-4). You must understand the architectur
 ### Step 2. Spawn Critics
 
 After the explanation is complete, spawn three independent architectural
-critics on `gpt-5.6-sol`, all in a single message. Give them separate focus
+critics in fresh contexts, all in a single message. Give them separate focus
 lenses: structure, correctness risk, and maintainability.
 
-For each critic:
-- use a read-only or explicit no-edit brief
-- use `gpt-5.6-sol`
-
-The lead may raise the reasoning effort when the architecture warrants deeper
-analysis.
+Use a read-only or explicit no-edit brief for each critic. Follow `../poteto-mode/references/codex-delegation.md`.
 
 Read `references/critic-prompt.md` for the prompt template. Each critic gets:
 1. The explanation from Step 1 (so they don't re-explore)

@@ -171,12 +171,13 @@ For any subagent you spawn inside a playbook step:
   skill
 - read-only lanes should get an explicit no-edit brief
 - concurrent writers must be separated into git worktrees
-- every parent and subagent uses `gpt-5.6-sol`, per
-  `references/codex-delegation.md`
+- inherit the selected Codex model and reasoning effort; omit per-spawn
+  overrides, per `references/codex-delegation.md`
 
 You own every subagent's work. Review the diff, artifact, or evidence and write
-your own summary. A second opinion is the same prompt in a fresh
-`gpt-5.6-sol` context. Agreement is high-signal.
+your own summary. A second opinion uses a self-contained brief in a fresh
+context. Check agreement against the evidence; shared blind spots can survive
+independent reviews.
 
 ## Writing the reply
 
