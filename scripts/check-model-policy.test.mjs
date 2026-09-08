@@ -112,6 +112,10 @@ for (const text of [
 	'Per-role model settings override these defaults.',
 	'Do not set model: "small"; model: "large".',
 	'Do not select a different model, but use Grok for code.',
+	'Do not select a different model and use Grok for code.',
+	'Do not select a different model, use Grok for code.',
+	'Do not set model: "small" and set model: "large".',
+	'Do not set model: "small", set model: "large".',
 	'Select your preferred model in Codex, such as Astra.',
 	'Use Grok for code after the old fields are removed.',
 ]) {
@@ -138,6 +142,11 @@ for (const text of [
 	'Do not set model: "custom-model".',
 	'Do not pick the worker model; inherit the selected settings.',
 	'Never use Sonnet for reviews.',
+	'Do not select a different model or use Grok for code.',
+	'Do not select a different model, nor use Grok for code.',
+	'Do not select a different model and do not use Grok for code.',
+	'Do not select a model, check model availability, or write global configuration.',
+	'PStack does not choose models, probe availability, or maintain a role-to-model configuration.',
 	'No role-to-model configuration is needed.',
 ]) {
 	test(`scanner permits non-policy prose: ${text}`, () => {

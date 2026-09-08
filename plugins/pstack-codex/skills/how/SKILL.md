@@ -24,7 +24,7 @@ Each explorer gets the prompt in `references/explorer-prompt.md` with its angle 
 
 ## Step 2b. Direct Explain (simple questions)
 
-Explore and explain directly in one read-only pass. A narrow question does not need a separate agent to change roles. Use `references/explainer-prompt.md` without the explorer-findings section. Go to Step 4.
+Explore and explain directly in one read-only pass. Read the relevant code and trace the behavior yourself. A narrow question does not need a separate agent to change roles. Use only the **Output Format** and **Communication Style** sections of `references/explainer-prompt.md`. The synthesis instructions and explorer findings do not apply to this path. Go to Step 4.
 
 ## Step 3. Synthesize (complex questions only)
 

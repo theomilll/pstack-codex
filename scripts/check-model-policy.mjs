@@ -57,14 +57,25 @@ function paragraphs(text) {
 	return blocks;
 }
 
+// An additive imperative starts a new directive. Comma lists ending in "or"
+// or "nor" keep their shared negation, as in "Do not select, check, or set".
+const imperative = "(?:do not|don't|never|use|choose|select|assign|run|switch|set|raise|increase|lower|adjust|override|change|spawn|check|confirm|probe|enumerate|list|pick)\\b";
+const sentenceBreak = new RegExp(`;|\\.\\s+|,?\\s+but\\s+|,?\\s+and\\s+(?=${imperative})`, "i");
+const imperativeComma = new RegExp(`,\\s*(?=${imperative})`, "i");
+function clauses(text) {
+	return text.split(sentenceBreak).flatMap(clause =>
+		/,\s+(?:or|nor)\s+/i.test(clause) ? [clause] : clause.split(imperativeComma));
+}
+
 let failures = 0;
 for (const source of sources) for (const file of files(source)) {
 	const name = relative(root, file);
 	for (const { line, text } of paragraphs(readFileSync(file, "utf8"))) {
 		// Explicit denials and migration history explain the policy rather than
 		// configure it. Keep this exemption clause-local, so a later directive
-		// on the same line is still inspected.
-		for (const clause of text.split(/;|\.\s+|,?\s+but\s+/i)) {
+		// on the same line is still inspected. Split coordinated imperatives too,
+		// while leaving noun lists and negative "or"/"nor" lists together.
+		for (const clause of clauses(text)) {
 			const pinned = identifiers.test(clause);
 			const rule = runtimeRules.find(([pattern]) => {
 				const match = pattern.exec(clause);
