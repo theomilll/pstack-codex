@@ -1,13 +1,13 @@
 #!/usr/bin/env node
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
-// Scan shipped instructions and configuration, not historical upstream prose or
-// these regression fixtures. These checks catch known regressions, not every
+// Scan shipped instructions, provenance and configuration, not these regression
+// fixtures. These checks catch known regressions, not every
 // possible natural-language directive. Domain/data/mental models are valid.
 const root = resolve(process.argv[2] ?? join(dirname(fileURLToPath(import.meta.url)), ".."));
-const sources = [join(root, "README.md"), join(root, "plugins/pstack-codex")];
+const sources = ["README.md", "README-UPSTREAM.md", "PORTING.md", "plugins/pstack-codex"].map(path => join(root, path));
 const extensions = /\.(?:md|json|mjs|js|ts|sh|toml|ya?ml)$/;
 const identifiers = /\b(?:gpt[- ]?\d+(?:\.\d+)*(?:[- ][a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)?|claude-(?:\d|(?:fable|opus|sonnet|haiku)-)[a-z0-9.-]+|(?:grok|gemini)-\d[a-z0-9.-]*)\b/i;
 const modelNames = "(?:Claude(?: +(?:Fable|Opus|Sonnet|Haiku))?|Fable|Opus|Sonnet|Haiku|Gemini|Composer|Grok|Sol|Astra)";
@@ -36,7 +36,7 @@ const runtimeRules = [
 
 function* files(path) {
 	if (!existsSync(path)) return;
-	if (path.endsWith("README.md")) { yield path; return; }
+	if (statSync(path).isFile()) { yield path; return; }
 	for (const entry of readdirSync(path, { withFileTypes: true })) {
 		if (entry.name === "node_modules" || entry.name === ".git") continue;
 		const child = join(path, entry.name);

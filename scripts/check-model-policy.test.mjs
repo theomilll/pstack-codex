@@ -69,8 +69,12 @@ Model the domain before writing stateful logic.`);
 	assert.equal(result.status, 0, result.output);
 });
 
-test("scanner ignores upstream history but rejects named examples in shipped guides", () => {
-	assert.equal(scan("Use gpt-5.6-sol.", "README-UPSTREAM.md").status, 0);
+test("scanner rejects named examples in shipped guides and provenance", () => {
+	for (const path of ["README-UPSTREAM.md", "PORTING.md"]) {
+		assert.equal(scan("Use gpt-5.6-sol.", path).status, 1);
+		const attribution = scan("Upstream: [PStack](https://github.com/poteto/pstack/tree/61b9c0b).", path);
+		assert.equal(attribution.status, 0, attribution.output);
+	}
 	assert.equal(scan("Select your model in Codex, such as GPT-6 Astra.", "README.md").status, 1);
 	assert.equal(scan("Select your model in Codex, such as GPT-6 Astra.", "plugins/pstack-codex/docs/guide/01-setup.md").status, 1);
 	assert.equal(scan("Use GPT-6 Astra for this task.").status, 1);
