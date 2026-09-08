@@ -1,9 +1,39 @@
 # Porting record
 
-This repository ports `pstack-claude` at commit `61b9c0b` to Codex. It keeps
-the pstack workflow corpus and helper behavior while replacing Claude-specific
-execution contracts with Codex-native ones. Version 0.2.0 removes the initial
-port's fixed-model policy and makes setup an optional readiness check.
+This repository started from `pstack-claude` at commit `61b9c0b`. It now tracks
+PStack 0.15.0 at `cursor/plugins@71ed0d1`. Port version 0.3.0 applies the
+upstream changes since `efa2a53` while preserving Codex execution contracts.
+Delegates inherit the user's settings. Setup remains an optional readiness
+check, and the distribution contains no model specifications.
+
+## Upstream 0.15.0
+
+The release changes 96 paths under `pstack/`. All are accounted for:
+
+- 94 skill, reference, guide and asset paths are merged, added or removed in
+  the corresponding Codex plugin paths.
+- The upstream manifest maps to the Codex manifest with this port's version
+  0.3.0. The smaller upstream logo is copied unchanged.
+- The upstream README's applicable release information appears in this
+  repository's README and guide. `README-UPSTREAM.md` now links to the pinned
+  original instead of distributing model and setup instructions.
+
+The port now has 46 skills, 23 playbooks and 23 principles. The new principles
+are Attack the Premise and Test Behavior, Not Implementation. `how` loses its
+critique mode and both critic references. `how` and `why` use their reference
+prompts for output formats. Reflection requires explicit invocation. Writing
+guidance removes mannered prose and over-compression, and PR descriptions
+become short briefings with links to detailed evidence.
+
+One narrow correction applies to the new testing principle. Several listed
+assertions, such as `toBeDefined`, do fail when a function returns `undefined`.
+The port preserves the useful behavior-focused guidance without claiming that
+every weak assertion survives that substitution.
+
+`make-bot-ui`, Benny automation files and custom agent definitions were already
+outside the Codex distribution. They are unchanged in this upstream delta and
+remain excluded. The new Advisor plugin is a sibling of `pstack/`, so it is
+outside this update. Helper executable code is unchanged upstream.
 
 ## Source inventory
 
@@ -85,22 +115,22 @@ are remote PR data, not a local Cursor runtime dependency. Removing the parser
 would regress an existing watcher input without making the Codex harness
 simpler.
 
-`README-UPSTREAM.md` is preserved verbatim for attribution and provenance. Its
-Claude and Cursor references are not operational instructions for this plugin.
+`README-UPSTREAM.md` preserves attribution and points to the pinned upstream
+README. It no longer embeds the upstream model policy.
 
 ## Acceptance checks
 
 `scripts/verify-port.sh` checks the package manifest, marketplace entry, hook,
-all 44 skill manifests, the 23 playbooks, the 21 principles, guide and helper
+all 46 skill manifests, the 23 playbooks, the 23 principles, guide and helper
 counts, forbidden Claude contracts, the shell helper, Bun tests, and TypeScript
 types. Regression checks reject fixed model identifiers and known model
 availability, routing, and execution-override patterns in operational content.
 The plan checker is exercised with a plan that uses independent verification
 lanes, including rejection cases for missing live, unit, perf, or review evidence.
 These checks catch known regressions; review still assesses instruction meaning.
-The archived upstream README is excluded from those runtime checks. The source
-checkout was checked separately before and after the original port because its
-location is not part of this portable repository.
+The provenance README is included in the model checks. The source checkout was
+checked separately before and after the original port because its location is
+not part of this portable repository.
 
 Local verification does not publish the plugin or update installed copies.
 Installation remains an explicit user action.
