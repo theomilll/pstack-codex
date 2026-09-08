@@ -1,10 +1,10 @@
 # Codex harness
 
-pstack's 23 playbooks and 21 principles stay. Only the harness call sites
+pstack's 23 playbooks and 23 principles stay. Only the harness call sites
 change.
 
-Sources: upstream pstack (`cursor/plugins` `pstack/`, v0.14.7,
-`cursor/plugins@efa2a53`), the Claude port this repo started from, and the
+Sources: upstream pstack (`cursor/plugins` `pstack/`, v0.15.0,
+`cursor/plugins@71ed0d1`), the Claude port this repo started from, and the
 Codex docs for skills, plugins, hooks, and subagents.
 
 ## Verdict

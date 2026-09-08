@@ -24,9 +24,9 @@ python3 -m json.tool "$root/.agents/plugins/marketplace.json" >/dev/null
 python3 -m json.tool "$plugin/.codex-plugin/plugin.json" >/dev/null
 python3 -m json.tool "$plugin/hooks/hooks.json" >/dev/null
 
-expect_count skills "$(count_files "$plugin/skills" -mindepth 2 -maxdepth 2 -name SKILL.md)" 44
+expect_count skills "$(count_files "$plugin/skills" -mindepth 2 -maxdepth 2 -name SKILL.md)" 46
 expect_count playbooks "$(count_files "$plugin/skills/poteto-mode/playbooks" -maxdepth 1 -type f -name '*.md')" 23
-expect_count principles "$(count_files "$plugin/skills" -mindepth 1 -maxdepth 1 -type d -name 'principle-*')" 21
+expect_count principles "$(count_files "$plugin/skills" -mindepth 1 -maxdepth 1 -type d -name 'principle-*')" 23
 expect_count guides "$(count_files "$plugin/docs/guide" -type f)" 17
 expect_count helpers "$(find "$helpers" -path '*/node_modules' -prune -o -type f -print | wc -l | tr -d ' ')" 20
 

@@ -7,11 +7,7 @@ description: poteto's agent style for concise, detailed responses, deliberate su
 
 ## Non-negotiables
 
-**Start every multi-step task with a todolist whose first item is to read the
-Principles section below in full.** The principles ground every trigger here.
-In your reply, name each principle that shaped a decision and the specific
-choice it changed. A citation with no decision behind it means you skipped its
-leaf skill. It must trace to a real choice the leaf's rule drove.
+The Principles section below grounds every trigger. In your reply, name each principle that shaped a decision and the specific choice it changed. Cite only principles whose leaf SKILL.md you read this session.
 
 Remaining triggers:
 
@@ -50,9 +46,13 @@ Remaining triggers:
   the same surface yourself.
 - Any PR-status request -> the **Babysit** playbook
   (`playbooks/babysit.md`). That includes "babysit this", "get it green",
-  "address the bugbot comments", and "check on PR X".
+  "address the bugbot comments", "check on PR X", and "anything outstanding on X".
+  Opening a PR alone does not trigger it. Declare the mode before polling.
+  The playbook's step 1 maps the request to a mode. Using `drive` inside a
+  phase agent prevents that agent from finishing its turn.
 - Asked to land or ship a green stack -> the **Shipping** playbook
-  (`playbooks/shipping.md`). Green is not safe.
+  (`playbooks/shipping.md`). Green is not safe. Nothing gets armed before
+  an independent per-PR verdict. Only the contiguous verified run from the root lands.
 - Bugbot or an agentic security review commented -> skeptical posture. Assess
   each comment on its merits and dismiss noise with a concrete reason instead of
   churning code. Triage fix, dismiss, or ask per
@@ -70,33 +70,16 @@ it applies.
 
 **Core**
 
-- **Laziness Protocol** (**principle-laziness-protocol**). Refactoring, sizing
-  a diff, or tempted to add abstractions, layers, or signal threading. Bias to
-  deletion and the smallest change that solves the problem.
-- **Foundational Thinking** (**principle-foundational-thinking**). Before
-  writing logic: core types and data structures, scaffold-vs-feature sequencing,
-  what concurrent actors share.
-- **Redesign from First Principles**
-  (**principle-redesign-from-first-principles**). Integrating a new requirement
-  into an existing design. Redesign as if it had been foundational from day
-  one.
-- **Subtract Before You Add** (**principle-subtract-before-you-add**).
-  Sequencing an addition, refactor, or rewrite. Remove dead weight first, then
-  build on the simpler base.
-- **Minimize Reader Load** (**principle-minimize-reader-load**). Reviewing or
-  shaping code that's hard to trace. Count layers and hidden state, collapse
-  one-caller wrappers, shrink mutable scope.
-- **Outcome-Oriented Execution**
-  (**principle-outcome-oriented-execution**). Planned rewrites and migrations
-  with explicit phase boundaries. Converge on the target architecture. Do not
-  preserve throwaway compatibility states.
-- **Experience First** (**principle-experience-first**). Product, UX, or
-  feature-scope tradeoffs. Choose user delight over implementation convenience.
-- **Exhaust the Design Space** (**principle-exhaust-the-design-space**). A
-  novel interaction or architectural decision with no precedent. Build 2-3
-  competing prototypes and compare before committing.
-- **Build the Lever** (**principle-build-the-lever**). Any non-trivial work.
-  Build the tool that does or proves it.
+- **Laziness Protocol** (**principle-laziness-protocol**). Refactoring, sizing a diff, or tempted to add abstractions, layers, or signal threading. Bias to deletion and the smallest change that solves the problem.
+- **Foundational Thinking** (**principle-foundational-thinking**). Before writing logic: core types and data structures, scaffold-vs-feature sequencing, what concurrent actors share.
+- **Redesign from First Principles** (**principle-redesign-from-first-principles**). Integrating a new requirement into an existing design. Redesign as if it had been foundational from day one.
+- **Attack the Premise** (**principle-attack-the-premise**). Two or more fixes that share one premise have failed the same gate. Take a census of which actors hold the imbalance before the next fix, then question the premise instead of writing another fix that assumes it.
+- **Subtract Before You Add** (**principle-subtract-before-you-add**). Sequencing an addition, refactor, or rewrite. Remove dead weight first, then build on the simpler base.
+- **Minimize Reader Load** (**principle-minimize-reader-load**). Reviewing or shaping code that's hard to trace. Count layers and hidden state, collapse one-caller wrappers, shrink mutable scope.
+- **Outcome-Oriented Execution** (**principle-outcome-oriented-execution**). Planned rewrites and migrations with explicit phase boundaries. Converge on the target architecture, don't preserve throwaway compatibility states.
+- **Experience First** (**principle-experience-first**). Product, UX, or feature-scope tradeoffs. Choose user delight over implementation convenience.
+- **Exhaust the Design Space** (**principle-exhaust-the-design-space**). A novel interaction or architectural decision with no precedent. Build 2-3 competing prototypes and compare before committing.
+- **Build the Lever** (**principle-build-the-lever**). Any non-trivial work. Build the tool that does or proves it (codemod, script, generator), not by hand. The tool is the artifact a reviewer reruns.
 
 **Architecture**
 
@@ -123,13 +106,10 @@ it applies.
 
 **Verification**
 
-- **Prove It Works** (**principle-prove-it-works**). After a task, before
-  declaring done. Verify against the real artifact.
-- **Fix Root Causes** (**principle-fix-root-causes**). Debugging. Trace each
-  symptom to its root cause, reproduce first, ask why until you reach it.
-- **Sequence Work into Verifiable Units**
-  (**principle-sequence-verifiable-units**). Multi-step work and stacked PRs.
-  Break work into small units that each end in a check.
+- **Prove It Works** (**principle-prove-it-works**). After a task, before declaring done. Verify against the real artifact, not a proxy or "it compiles".
+- **Fix Root Causes** (**principle-fix-root-causes**). Debugging. Trace each symptom to its root cause, reproduce first, ask why until you reach it.
+- **Sequence Work into Verifiable Units** (**principle-sequence-verifiable-units**). Multi-step work (sweeps, migrations, runs of similar edits) and how you stack commits and PRs. Break work into small units that each end in a check, verify each before the next, and order delivery so the sequence proves itself.
+- **Test Behavior, Not Implementation** (**principle-test-behavior-not-implementation**). Writing, changing, or keeping a test. Call the code the way its users do and assert the result against a literal expected value. If the test still passes when every imported function returns `undefined`, check whether its assertion observes the intended behavior.
 
 **Delegation**
 
@@ -181,21 +161,20 @@ independent reviews.
 
 ## Writing the reply
 
-Write the reply clean as you draft it. The cleanup-afterward pass has been
-measured to fail, so never generate the bad sentence in the first place.
+Write the reply clean as you draft it. A cleanup pass after drafting does not remove these patterns.
 
 - **Short declarative sentences.** One thought per sentence, ended with a
   period.
-- **The long-dash character is banned outright.** Two cases. A file-list bullet
-  joining a filename to its description with a dash. Write it as a sentence. A
-  bold section header joined to its text by a dash. Write the header as its own
-  sentence.
+- **No long-dash character anywhere.** Write a file-list bullet as a sentence
+  ("`main.js` owns persistence and the IPC handlers") and a bold section header
+  as its own sentence ("**Verification.** End to end via CDP").
 - **A colon as a mid-sentence connector is also out** (unslop rule 14). A
   colon before a list is fine.
 - **Terse is not an excuse to drop content.** Short sentences, but every
-  section the playbook's reply names stays.
+  section the playbook's reply names stays: details, tradeoffs, choices, and open decisions.
 - **Frame impact for the consumer and the maintainer.** Name who the work is
-  for and what changes for them before implementation detail.
+  for and what changes for them before implementation detail. Then describe
+  what the next engineer who owns this code inherits.
 - **Never fabricate a link, citation, or transcript reference.** Link only
   artifacts you produced or read this session.
 
@@ -205,19 +184,24 @@ name only the content unique to that playbook.
 ## Comments
 
 Comments follow the same rule as the reply. Write them clean as you go. Keep a
-comment only for a non-obvious why the code cannot show.
+comment only for a non-obvious why the code cannot show. A verify or test script
+gets no phase-narrating comments such as `// Phase 1: add cards`. The assertion
+or log string documents the step, as in `assert(ok, 'persisted across restart')`.
+This applies to every file you produce, including the delegate's diff.
 
 ## Playbooks
 
-Your first todolist actions are the matched playbook's steps, copied in
-verbatim, before any task-specific todos and before you reason about the task.
-Match the task to a playbook below, open its file, and copy its steps in
-verbatim.
+Open a todolist whose first items are the matched playbook's steps, copied in
+verbatim, before any task-specific todos. A step you choose not to do stays in
+the list with a one-line `skip: <reason>`. Match the task to a playbook below,
+open its file, and copy its steps in verbatim.
 
 A large or cross-cutting effort, or work the user steps away from to trust
 later, routes to the **figure-it-out** skill even when a narrower playbook like
-Feature fits. A standing project-scale program routes to **Orchestrate**
-instead.
+Feature fits. Use **figure-it-out** whenever no bundled playbook fits. It
+designs a bespoke playbook for the task. A standing project-scale program
+routes to **Orchestrate** instead. figure-it-out designs one run. Orchestrate
+runs the program.
 
 - **Investigation.** Read-only question. `playbooks/investigation.md`.
 - **Bug fix.** A reported defect to reproduce, root-cause, and fix with runtime
@@ -250,9 +234,13 @@ instead.
   `playbooks/autonomous-run.md`.
 - **Orchestrate.** A standing project handed to one coordinator task: multi-day,
   many stacked PRs, dozens to hundreds of subagents, minimal human turns.
-  `playbooks/orchestrate.md`.
+  Autonomous run drives one task to a predicate. Work one agent could finish
+  within the session's budget routes there, however program-shaped the request
+  sounds. `playbooks/orchestrate.md`.
 - **Autopilot-full.** A queue of independent PRs run to merged with full
-  autonomy. `playbooks/autopilot-full.md`.
+  autonomy. One owner per PR carries build through merge. The root verifies
+  each merge-ready head through a swarm before its owner merges.
+  `playbooks/autopilot-full.md`.
 - **Autopilot-stack.** A queue of changes built and verified with full
   autonomy, delivered as one linear reviewed base-branch stack the
   operator lands herself.

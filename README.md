@@ -2,11 +2,10 @@
 
 Codex port of [poteto](https://x.com/poteto)'s
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) (upstream
-v0.14.7, `cursor/plugins@efa2a53`). The 23 playbooks and 21 principles are
+v0.15.0, `cursor/plugins@71ed0d1`). The 23 playbooks and 23 principles are
 poteto's. This repository ports the harness to Codex's plugin, skill, hook,
-and subagent tools. The upstream README is preserved for attribution at
-[README-UPSTREAM.md](./README-UPSTREAM.md); its setup and model instructions
-do not apply to this port. MIT, same as upstream.
+and subagent tools. [Upstream provenance](./README-UPSTREAM.md) links to the
+original distribution. MIT, same as upstream.
 
 > if you want to go fast, go deep first. pstack helps you write less, but
 > higher quality code. rigorous agent workflows you can parallelize with
@@ -30,7 +29,7 @@ codex plugin add pstack-codex@pstack-codex
 
 ## Get started
 
-1. Select your preferred model in Codex once, such as GPT-6 Astra.
+1. Use your preferred Codex settings.
 2. Use `$poteto-mode` for tasks that need its coding and verification workflow.
 
 `$setup-pstack` is optional. It checks skill discovery and the tools needed for
@@ -89,8 +88,10 @@ Run the complete local verification with:
 
 ## Versioning
 
-Version 0.2.0 removes PStack's model policy and makes setup optional while
-preserving all 44 skills, 23 playbooks, and 21 principles. The plugin version in
+Version 0.3.0 syncs upstream 0.15.0 with 46 skills, 23 playbooks, and 23
+principles. It adds Attack the Premise and Test Behavior, Not Implementation,
+simplifies investigation workflows, makes reflection explicit, and updates
+the writing guidance. Model specifications remain excluded. The plugin version in
 `plugins/pstack-codex/.codex-plugin/plugin.json` is this port's own line. Bump it
 whenever installed copies should pick up a change.
 
@@ -104,4 +105,4 @@ whenever installed copies should pick up a change.
 | `tdd`, `no-comments`, `unslop`, `technical-writing`, `typescript-best-practices` | Build and clean it. |
 | `create-verification-skill`, `maintain-verification-skill`, `show-me-your-work` | Prove it. |
 | `figure-it-out`, `reflect`, `automate-me`, `setup-pstack`, `bro` | The rest. |
-| `principle-*` | The 21 principles, one leaf skill each. |
+| `principle-*` | The 23 principles, one leaf skill each. |
