@@ -117,9 +117,8 @@ Aim for a complete **coverage map**, not a minimal one. A null result from an is
 
 Launch all matching investigators in a single message so they run concurrently. One investigator per category lets each specialize in one tool's query vocabulary and result shape. Don't ask one agent to cover multiple MCPs.
 
-Subagent config (each):
-- use a read-only or explicit no-edit brief so investigators cannot widen scope
-- use `gpt-5.6-sol`
+Use a read-only or explicit no-edit brief for each investigator so it cannot
+widen scope. Follow `../poteto-mode/references/codex-delegation.md`.
 
 Each investigator gets:
 1. The base prompt from `references/investigator-prompt.md`
@@ -161,10 +160,7 @@ If your scope assessment suggests a single-commit trivial target where the PR de
 
 ## Step 4. Synthesize
 
-Spawn one synthesizer subagent:
-
-- use a read-only or explicit no-edit brief
-- use `gpt-5.6-sol`
+Spawn one fresh synthesizer subagent with a read-only or explicit no-edit brief.
 
 The synthesizer gets:
 1. The investigator findings, including any null results and any categories skipped with justification

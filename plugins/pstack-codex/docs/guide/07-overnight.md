@@ -52,7 +52,7 @@ When you're back, ask for the run in review form:
 $show-me-your-work catch me up on what you did last night
 ```
 
-Before the skill hands back its summary, it spawns a fresh `gpt-5.6-sol`
+Before the skill hands back its summary, it spawns a fresh
 reviewer to read the trail and the transcript. The reply ends with an Attention
 section listing what deserves your scrutiny. Read that section first, then the
 log rows it points at. You're auditing decisions, not re-reading the whole

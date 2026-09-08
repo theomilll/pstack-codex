@@ -22,12 +22,11 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 | Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json`. This repo is a marketplace root; the installed plugin lives at `plugins/pstack-codex/`. |
 | Startup reminder | `hooks/hooks.json` `SessionStart` | Same file name. Match `startup`, `resume`, `clear`, and `compact`. |
 | Spawn a child | `Agent` + `subagent_type` | Use Codex's native subagent tools, such as `spawn_agent`. The plugin does not install agent types. |
-| Read-only child | `pstack:read-only` | Use a no-edit brief, and any stricter read-only subagent preset the user already configured. |
+| Read-only child | `pstack:read-only` | Use a no-edit brief and available permission restrictions without selecting a custom agent preset that changes execution settings. |
 | Writing child | `pstack:poteto-agent` or `general-purpose` | Spawn a normal Codex subagent and tell it to use `$poteto-mode` or the relevant routed skill. |
 | Resume or steer a child | `SendMessage` | Use the host's native follow-up or message tool, such as `followup_task` or `send_message`. Inspect with `list_agents`, stop with `interrupt_agent`, and await with `wait_agent` when exposed. |
-| Per-spawn model | Claude aliases or `codex:codex-rescue` | Use `gpt-5.6-sol` for every parent task and subagent. Do not substitute another model. |
-| Per-spawn reasoning | implicit or alias-specific | Inherit the parent by default. If the host exposes reasoning overrides, use the configured value for that role. |
-| Per-role model config | `~/.claude/rules/pstack-models.md` | Removed. `$setup-pstack` verifies that `gpt-5.6-sol` is available. It never edits `~/.codex/config.toml`. |
+| Execution settings | Model aliases and role-specific reasoning | Inherit the model and reasoning effort selected in Codex. Omit per-spawn overrides. |
+| Setup | Per-role configuration in global rules | Optional `$setup-pstack` checks skill discovery and task-relevant tools. It never edits global Codex configuration. |
 | Worktree isolation | `isolation: "worktree"` | Codex subagents share the workspace. The coordinator creates one Git worktree per concurrent writer before spawning and includes the exact path in its brief. |
 | Ask the human | `AskUserQuestion` | Use the host's structured user-input tool when available; otherwise ask one concise question for a real product, preference, or irreversible choice. |
 | Wake / recurring | Claude `/loop` | Use Codex's native wake mechanism: heartbeat automation in the app, or a bounded watcher task that rechecks a concrete predicate. |
@@ -52,19 +51,22 @@ Use these contracts unless a playbook says otherwise.
   the relevant routed skill. Give it a bounded brief, explicit acceptance
   checks, and its own worktree if another writer could touch the same tree.
 - Read-only explorers, judges, critics, and verifiers. Spawn a subagent with an
-  explicit no-edit brief. If the host exposes a stronger read-only preset, use
-  it. These lanes may still read code, run read-only shell commands, and use
-  MCP tools.
-- Independent verify. Spawn a fresh `gpt-5.6-sol` subagent with a self-contained
+  explicit no-edit brief and available permission restrictions. Do not select
+  custom agent presets that change execution settings. These lanes may still
+  read code, run read-only shell commands, and use MCP tools.
+- Independent verify. Spawn a fresh subagent with a self-contained
   brief. The verifier inspects and reports. It does not land code changes.
 
-## Default model guidance
+## Execution settings
 
-Use `gpt-5.6-sol` for every role. If it is unavailable, stop and report the
-missing requirement. Never fall back to another model.
+Codex owns the model and reasoning effort. PStack delegates inherit the parent
+settings, with no per-role overrides or model availability gate. Setup is not a
+prerequisite for using a skill. Existing Codex agent defaults remain host-owned;
+PStack does not override them.
 
-Use a self-contained or short-history fork for independent review. Select
-`gpt-5.6-sol` explicitly when the host permits model overrides.
+Use a self-contained or short-history fork for independent review. Independence
+comes from fresh context and a separate review brief; a model switch is not
+part of the workflow.
 
 ## State and transcript safety
 

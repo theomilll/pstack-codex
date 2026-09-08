@@ -4,8 +4,9 @@ Codex port of [poteto](https://x.com/poteto)'s
 [pstack](https://github.com/cursor/plugins/tree/main/pstack) (upstream
 v0.14.7, `cursor/plugins@efa2a53`). The 23 playbooks and 21 principles are
 poteto's. This repository ports the harness to Codex's plugin, skill, hook,
-and subagent model. The upstream README is preserved at
-[README-UPSTREAM.md](./README-UPSTREAM.md). MIT, same as upstream.
+and subagent tools. The upstream README is preserved for attribution at
+[README-UPSTREAM.md](./README-UPSTREAM.md); its setup and model instructions
+do not apply to this port. MIT, same as upstream.
 
 > if you want to go fast, go deep first. pstack helps you write less, but
 > higher quality code. rigorous agent workflows you can parallelize with
@@ -29,17 +30,22 @@ codex plugin add pstack-codex@pstack-codex
 
 ## Get started
 
-1. Run `$setup-pstack` once to confirm that `gpt-5.6-sol` is available.
-2. Use `$poteto-mode` whenever the task is non-trivial or the user wants
-   rigor.
+1. Select your preferred model in Codex once, such as GPT-6 Astra.
+2. Use `$poteto-mode` for tasks that need its coding and verification workflow.
+
+`$setup-pstack` is optional. It checks skill discovery and the tools needed for
+your task, and can help you find or create a project verification skill.
 
 New here? The
 [guide](./plugins/pstack-codex/docs/guide/README.md) walks through a first real
 task. Every `$name` in the guide is a Codex skill mention. Codex can also pick
 the skills implicitly when your request matches their descriptions.
 
-Every parent task and subagent uses `gpt-5.6-sol`. If the host does not expose
-that model, pstack stops instead of substituting another model.
+PStack inherits the model and reasoning effort selected in Codex. It does not
+choose models, assign execution settings by role, check model availability, or
+write global Codex configuration. Independent reviewers use fresh context and
+different review focuses. Existing Codex agent defaults remain host-owned;
+PStack does not override them or select custom agent presets.
 
 ## What changed from the Claude port
 
@@ -48,8 +54,8 @@ that model, pstack stops instead of substituting another model.
   custom agents.
 - `.claude-plugin/` becomes a Codex marketplace repo with one real plugin at
   `plugins/pstack-codex/.codex-plugin/plugin.json`.
-- Claude's per-role model configuration becomes one fixed Codex policy:
-  `gpt-5.6-sol` for every role.
+- Per-role model configuration and model availability gates are removed.
+  Codex owns model and reasoning settings; delegates inherit the parent.
 - `.claude/skills/verify-<app>/` becomes `.agents/skills/verify-<app>/`.
 - Claude `/loop` becomes Codex's native wake mechanism: a heartbeat automation
   in the app or a bounded watcher task in CLI flows.
@@ -83,8 +89,10 @@ Run the complete local verification with:
 
 ## Versioning
 
-The plugin version in `plugins/pstack-codex/.codex-plugin/plugin.json` is this
-port's own line. Bump it whenever installed copies should pick up a change.
+Version 0.2.0 removes PStack's model policy and makes setup optional while
+preserving all 44 skills, 23 playbooks, and 21 principles. The plugin version in
+`plugins/pstack-codex/.codex-plugin/plugin.json` is this port's own line. Bump it
+whenever installed copies should pick up a change.
 
 ## Skills
 

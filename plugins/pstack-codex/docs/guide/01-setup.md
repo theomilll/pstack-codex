@@ -1,6 +1,6 @@
 # Set up pstack
 
-In this page you install the plugin, confirm the required model, and run your
+In this page you install the plugin, optionally check readiness, and run your
 first task.
 
 ## Install the plugin
@@ -14,17 +14,22 @@ codex plugin add pstack-codex@pstack-codex
 
 Codex confirms the plugin is installed. Skills invoke explicitly as `$poteto-mode`. The `$` is only needed when you want to force a specific skill instead of letting routing happen implicitly.
 
-## Confirm the model
+## Optionally check readiness
 
-Run:
+You can start using the skills immediately after installation. For a readiness
+check, run:
 
 ```text
 $setup-pstack
 ```
 
-[`$setup-pstack`](../../skills/setup-pstack/SKILL.md) confirms that
-`gpt-5.6-sol` is available. Every parent task and subagent uses that model. If
-the host does not expose it, setup stops instead of substituting another model.
+[`$setup-pstack`](../../skills/setup-pstack/SKILL.md) checks that Codex can
+discover the skills and that tools relevant to your task are available. It does
+not select a model, check model availability, or write global configuration.
+
+Choose your model and reasoning effort in Codex. PStack uses inherited settings
+without adding role configuration; existing Codex agent defaults remain under
+your control.
 
 ## Accept the verification offer, or don't
 
@@ -32,7 +37,8 @@ At the end of setup, `$setup-pstack` looks for a way to prove app behavior in yo
 
 Say yes and it writes `.agents/skills/verify-<app>/`, a project-local skill that teaches subagents to drive your app the way a user does. It proves the skill works once before handing it over. Say no and setup moves on. You can run `$create-verification-skill` yourself any time. [Verify and ship](./06-verify-and-ship.md#create-a-project-verification-skill) covers when it earns its place.
 
-After setup, start a new task.
+After installation or an update, a new task may be needed for Codex to load the
+changed skills. Setup itself is not a prerequisite for your first task.
 
 ## Run your first task
 

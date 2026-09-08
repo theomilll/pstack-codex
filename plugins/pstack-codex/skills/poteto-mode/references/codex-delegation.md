@@ -25,16 +25,27 @@ Every delegated brief should name:
 
 Prefer file pointers over pasted dumps.
 
-## Model policy
+## Inherit Codex settings
 
-Use `gpt-5.6-sol` for every parent task and subagent. Select it explicitly when
-the host permits model overrides. If it is unavailable, stop and report the
-missing requirement. Do not substitute another model.
+Use the model and reasoning effort selected for the parent task. Omit model
+and reasoning overrides when spawning children. Use ordinary subagents with
+role-specific briefs, not custom agent presets that change those settings.
+PStack does not choose models, probe availability, or maintain a role-to-model
+configuration. Existing host-level agent defaults remain controlled by Codex
+and the user; this plugin does not edit them.
+
+An independent review needs a fresh context and a self-contained brief, not
+a different model. Keep the implementer's conclusions out of a verifier's
+brief so it can check the artifact against the acceptance criteria itself.
+When concurrency capacity is exhausted, schedule additional waves as slots
+become available. If subagents are unavailable, run the bounded passes locally
+and disclose the loss of independent review. Never claim
+a separate verifier ran when it did not.
 
 ## Steering and synthesis
 
 - Continue or steer a running child through Codex's native task controls.
 - Do not trust a child's summary alone. Read its artifact, diff, or evidence.
-- A second opinion is the same bounded brief in a fresh `gpt-5.6-sol` context.
+- A second opinion is the same bounded brief in a fresh context.
 - If a lane stalls or drifts, replace it with a fresh bounded lane instead of
   stacking vague follow-ups.

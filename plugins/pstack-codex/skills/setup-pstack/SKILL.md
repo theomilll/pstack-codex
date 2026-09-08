@@ -1,40 +1,38 @@
 ---
 name: setup-pstack
-description: Verify that gpt-5.6-sol is available for pstack-codex. Use for `$setup-pstack`, "configure pstack", or checking pstack's Codex model requirement.
+description: Check PStack skill discovery and the tools needed for a project's workflow. Use for `$setup-pstack`, "configure pstack", or troubleshooting PStack readiness in Codex.
 ---
 
 # Setup pstack
 
-pstack-codex uses `gpt-5.6-sol` for every parent task and subagent. It has no
-per-role model choices and never substitutes another model.
+This is an optional readiness check. PStack works with the selected Codex
+model and reasoning effort and has no model setup step. Do not enumerate
+models, request role assignments, or change Codex configuration.
 
-## Steps
+## Check readiness
 
-### 1. Check availability
+1. Confirm that `poteto-mode` and the skills relevant to the user's task are
+   discoverable through the current host. If they are missing, report which
+   skills are missing and check the plugin's installation status using the
+   available Codex plugin controls. Do not claim the plugin is ready merely
+   because this file is readable. After an install or update, a new task may
+   be needed to load the changed skills.
+2. Inspect the project's instructions and existing verification entry points.
+   Identify the command or `verify-*` skill that exercises the real surface.
+   If none exists, offer `$create-verification-skill` once. Its absence does
+   not block work that can be verified directly.
+3. Check only capabilities needed for the requested workflow. Subagent tools
+   matter for independent review; browser or computer-use tools matter for
+   UI verification; Bun matters for the bundled helpers; a forge CLI matters
+   for PR operations. A missing optional tool is a limitation for that
+   workflow, not a reason to block all PStack skills. Use a supported
+   alternative when available and describe any verification gap.
+4. Summarize what is ready, the relevant missing capabilities, and the next
+   useful workflow. If no project or task is selected, confirm skill
+   discovery and leave project-specific checks until they are relevant.
 
-Read the models exposed by the current Codex host. Confirm that
-`gpt-5.6-sol` is available with the reasoning effort needed for the task.
+## Existing installations
 
-If the model is unavailable, stop and report the missing requirement. Do not
-fall back to another model or silently inherit a parent running another model.
-
-### 2. Check stale configuration
-
-Look for `${CODEX_HOME:-$HOME/.codex}/pstack-codex/models.md`. This port no
-longer uses per-role model configuration. If the file exists, explain that it
-is obsolete and ask before deleting it because it is user-owned state.
-
-Do not edit `~/.codex/config.toml`, project agent profiles, or any other global
-Codex configuration.
-
-### 3. Confirm
-
-Tell the user that pstack-codex is ready and that every role uses
-`gpt-5.6-sol`.
-
-### 4. Offer a verification skill
-
-Check whether the project has a way to drive the real app for proof, such as a
-`verify-*` skill or an existing harness. If it does not, offer once to create a
-project-local verification skill with `$create-verification-skill`. Move on if
-the user declines.
+Older ports used a PStack model file or required a particular model. Neither
+is used now. Do not read, create, migrate, or delete that obsolete state as a
+prerequisite to setup. Leave user-owned files and global Codex settings alone.

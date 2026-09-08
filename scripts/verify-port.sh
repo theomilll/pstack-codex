@@ -56,19 +56,8 @@ if rg -n '(\.codex/skills|~/.codex/skills|^user-invocable:)' "$plugin/skills" "$
 	fail 'unsupported skill path or frontmatter remains'
 fi
 
-other_gpt_models=$(rg -o -i --glob '!**/.git/**' --glob '!**/node_modules/**' 'gpt[- ]?[0-9]+(\.[0-9]+)*(-[a-z0-9.-]+)?' "$root" \
-	| sed 's/.*://' \
-	| tr '[:upper:]' '[:lower:]' \
-	| sort -u \
-	| grep -Fvx 'gpt-5.6-sol' || true)
-if [ -n "$other_gpt_models" ]; then
-	printf '%s\n' "$other_gpt_models" >&2
-	fail 'a GPT model other than gpt-5.6-sol is mentioned'
-fi
-
-if rg -n -i '(different model family|cross-model|multi-model|model diversity)' "$plugin/skills" "$plugin/docs"; then
-	fail 'multi-model workflow language remains in an operational skill or guide'
-fi
+node --test "$root/scripts/check-model-policy.test.mjs" "$root/scripts/check-plan.test.mjs"
+node "$root/scripts/check-model-policy.mjs" "$root"
 
 bash -n "$helpers/worktree-audit.sh"
 

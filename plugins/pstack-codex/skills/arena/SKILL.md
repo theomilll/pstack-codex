@@ -20,18 +20,19 @@ Open a todolist with one entry per phase before launching anything. The arena ru
 
 ## Phase A: Frame
 
-The N candidates will receive the same prompt, so the prompt is the contract. Get it right before spawning anything.
+The N candidates share a task contract, with a distinct exploration direction when useful. Get it right before spawning anything.
 
 1. State the artifact each candidate is producing.
 2. Derive the rubric. State what success looks like for *this* task, then turn it into 3-6 concrete gradeable criteria. Concrete: `Adds a --dry-run flag that skips writes`. Vague: `code is correct`. The rubric is the picker's tool in Phase D; candidates only see the task.
-3. Pick the runners. Use `gpt-5.6-sol` for every runner. Spawn more when the
-   arena covers multiple design directions. Give every runner an independent
-   context and the same task contract.
+3. Choose enough runners to explore the relevant design directions. Give every
+   runner a fresh context and the same task contract. When directions need
+   deliberate coverage, assign a distinct hypothesis or structural constraint
+   to each runner without changing the shared requirements.
 4. Assign output paths. Each candidate writes to its own location (a git worktree where possible, otherwise `/tmp/arena-<slug>/candidate-<n>/`). N candidates writing to the same path is shared mutable state and fails the the **separate-before-serializing-shared-state** principle skill test.
 
 ## Phase B: Fan out
 
-Spawn all N subagents in one wave. Create a distinct Git worktree before spawning each repository writer, then give it the exact path. Each child gets the task, the path to shared grounding, its own output path, and instructions to produce both the artifact and a short rationale. Read-only candidates can share a checkout. Follow `../poteto-mode/references/codex-delegation.md`.
+Spawn the N subagents in parallel up to the host's concurrency limit, using additional waves as needed. Create a distinct Git worktree before spawning each repository writer, then give it the exact path. Each child gets the task, the path to shared grounding, its own output path, and instructions to produce both the artifact and a short rationale. Read-only candidates can share a checkout. Follow `../poteto-mode/references/codex-delegation.md`.
 
 The rationale is mandatory. Without it, the parent cannot tell whether a candidate's structure is principled or accidental, which makes Phase E grafting unreliable. Each rationale names the alternatives the candidate considered and what it rejected.
 
@@ -39,9 +40,10 @@ If a candidate fails to produce output, proceed with N-1 and note the dropout in
 
 ## Phase C: Blind judge
 
-After all Phase B candidates complete, spawn one read-only or no-edit judge on
-`gpt-5.6-sol` in a fresh, self-contained context. It sees the rubric and the
-candidates by path label, scores each criterion, and recommends a base with
+After all Phase B candidates complete, spawn one read-only or no-edit judge in
+a fresh, self-contained context. It sees the rubric and the candidates by
+anonymous path label, without runner identities or the parent's preferred
+answer. It scores each criterion and recommends a base with
 rationale. It runs in parallel with the parent's reading in Phase D, not with
 the candidates themselves. Spawning while candidates are still writing means
 the judge sees partial or empty outputs and reports them as dropouts.
@@ -64,7 +66,7 @@ Fold each graft in by hand, per the **redesign-from-first-principles** principle
 
 Record what was grafted, from which candidate, and what was rejected and why. The rejection notes are the highest-signal part of the record. Future readers learn from what you considered and dropped, not just what you kept.
 
-When N candidates converge on the same shape, that is a strong agreement signal. Note the convergence in the record and ship the consensus shape. No graft is needed. When N candidates wildly diverge, Phase A was under-specified. Reframe and re-run rather than averaging the divergence.
+When candidates converge on the same shape, record that agreement and verify the shared assumptions; repeated agreement is not proof. No graft is needed when the best result is already coherent. When candidates diverge, compare the tradeoffs against the contract. Reframe and re-run only if the requirements were too ambiguous to judge.
 
 ## Phase F: Verify
 

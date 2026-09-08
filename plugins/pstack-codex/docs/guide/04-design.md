@@ -2,8 +2,8 @@
 
 One attempt at a hard design locks in its first shape. `$architect` settles
 types and boundaries before implementation. `$arena` runs several independent
-`gpt-5.6-sol` attempts at the same brief and merges the best parts.
-`$interrogate` uses fresh `gpt-5.6-sol` reviewers to try to break the result.
+attempts at the same brief and merges the best parts.
+`$interrogate` uses fresh reviewers to try to break the result.
 When the job is coverage rather than design synthesis, `$swarm` fans out slices
 or races and aggregates their results.
 
@@ -30,15 +30,15 @@ $arena take my prompt to the arena verbatim. i want to compare their proposals w
 ```
 
 [`$arena`](../../skills/arena/SKILL.md) is the general tool underneath. N
-`gpt-5.6-sol` subagents attempt the same design or code brief in parallel, each
-writing to its own worktree or directory. A fresh read-only `gpt-5.6-sol` judge
+subagents attempt the same design or code brief in parallel, each
+writing to its own worktree or directory. A fresh read-only judge
 scores every candidate against a rubric. The coordinator reads each candidate
 end to end, picks a base, grafts in the best ideas from the losers, and verifies
 the result.
 
 ```mermaid
 flowchart LR
-    A[One task] --> B[Independent Sol runners]
+    A[One task] --> B[Independent attempts]
     B --> C[Candidate 1]
     B --> D[Candidate 2]
     B --> E[Candidate N]
@@ -73,9 +73,9 @@ $interrogate the whole branch, but skeptically. no nitpicks unless it's an actua
 ```
 
 [`$interrogate`](../../skills/interrogate/SKILL.md) sends the same diff, intent,
-and rubric to three independent `gpt-5.6-sol` reviewers with complementary
-focus lenses. A finding that two reviewers raise independently is high-signal.
-The lead sorts everything into `Act on`, `Consider`, `Noted`, and `Dismissed`,
+and rubric to three independent reviewers with complementary
+focus lenses. The lead checks every finding against the evidence, including
+issues raised by only one reviewer, and sorts everything into `Act on`, `Consider`, `Noted`, and `Dismissed`,
 with a reason for each dismissal, and applies nothing automatically.
 
 Read the dismissals too. The lead is a pragmatic senior engineer, not an oracle, and you can override it.
