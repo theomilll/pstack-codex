@@ -56,6 +56,12 @@ if rg -n '(\.codex/skills|~/.codex/skills|^user-invocable:)' "$plugin/skills" "$
 	fail 'unsupported skill path or frontmatter remains'
 fi
 
+for skill in how why typescript-best-practices unslop; do
+	yaml="$plugin/skills/$skill/agents/openai.yaml"
+	[ -f "$yaml" ] || fail "$skill missing agents/openai.yaml"
+	rg -q 'allow_implicit_invocation: false' "$yaml" || fail "$skill implicit invocation not disabled"
+done
+
 node --test "$root/scripts/check-model-policy.test.mjs" "$root/scripts/check-plan.test.mjs"
 node "$root/scripts/check-model-policy.mjs" "$root"
 

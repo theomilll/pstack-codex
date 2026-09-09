@@ -41,7 +41,7 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 | Plugin files at runtime | installed Claude cache path | `<pstack root>` means the installed Codex plugin root. Read files relative to it. Do not assume a hard-coded cache directory. |
 | Plugin logo | `.cursor-plugin/plugin.json` `logo` | `.codex-plugin/plugin.json` `interface.logo`. Path is plugin-root-relative and starts with `./`. |
 | Skill path filter | Cursor `paths` frontmatter | Not shipped. Codex skill frontmatter is `name` and `description` only. |
-| Disable model invocation | Cursor `disable-model-invocation` frontmatter | Not shipped. Codex skills stay matchable from `description`. |
+| Disable model invocation | Cursor `disable-model-invocation` frontmatter | `agents/openai.yaml` `policy.allow_implicit_invocation: false`. Explicit `$name` still works. Keep SKILL.md frontmatter to `name` and `description`. |
 
 ## Default delegation shape
 
@@ -78,5 +78,4 @@ The GitHub PR watcher retains support for Cursor Bugbot automation markers becau
 
 ## Pending upstream mappings
 
-- `73f8be4` `pstack/skills/{how,make-bot-ui,typescript-best-practices,unslop,why}/SKILL.md`: Cursor `disable-model-invocation`. Codex has no equivalent skill switch. Retained: existing `name` and `description` frontmatter only. `make-bot-ui` is not in this port.
-- `23a56e2` `pstack/skills/typescript-best-practices/SKILL.md`: Cursor `paths: ["**/*.ts", "**/*.tsx"]`. Codex skill frontmatter has no path-scoped invocation. Retained: the TypeScript rule prose, including schemas-before-guards.
+- `23a56e2` `pstack/skills/typescript-best-practices/SKILL.md`: Cursor `paths: ["**/*.ts", "**/*.tsx"]`. Codex skill frontmatter has no path-scoped invocation. Retained: the TypeScript rule prose, including schemas-before-guards. `disable-model-invocation` on this skill is shipped as `agents/openai.yaml`.
