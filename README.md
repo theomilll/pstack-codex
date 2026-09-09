@@ -68,8 +68,9 @@ PStack does not override them or select custom agent presets.
 
 ## Compatibility
 
-- Cursor `disable-model-invocation` is not shipped. Codex skills stay matchable
-  from `description`.
+- Cursor `disable-model-invocation` maps to `agents/openai.yaml`
+  `policy.allow_implicit_invocation: false` on `how`, `why`,
+  `typescript-best-practices`, and `unslop`. Explicit `$name` still works.
 - Cursor skill `paths` frontmatter is not shipped. Codex skill frontmatter is
   `name` and `description` only.
 - The upstream plugin logo maps to Codex `interface.logo`.
@@ -88,10 +89,10 @@ Run the complete local verification with:
 
 ## Versioning
 
-Version 0.3.0 syncs upstream 0.15.0 with 46 skills, 23 playbooks, and 23
-principles. It adds Attack the Premise and Test Behavior, Not Implementation,
-simplifies investigation workflows, makes reflection explicit, and updates
-the writing guidance. Model specifications remain excluded. The plugin version in
+Version 0.3.2 still tracks upstream 0.15.0 with 46 skills, 23 playbooks, and
+23 principles. It ships Cursor `disable-model-invocation` as
+`agents/openai.yaml` `policy.allow_implicit_invocation: false`. Model
+specifications remain excluded. The plugin version in
 `plugins/pstack-codex/.codex-plugin/plugin.json` is this port's own line. Bump it
 whenever installed copies should pick up a change.
 
