@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { after, test } from "node:test";
 
-const checker = fileURLToPath(new URL("../plugins/pstack-codex/skills/poteto-mode/scripts/check-plan.mjs", import.meta.url));
+const checker = fileURLToPath(new URL("../plugins/pstack/skills/poteto-mode/scripts/check-plan.mjs", import.meta.url));
 const dir = mkdtempSync(join(tmpdir(), "pstack-check-plan-"));
 after(() => rmSync(dir, { recursive: true, force: true }));
 const rule = "Tests alone are not sufficient verification. A PR is verified only when its unit, live, and perf boxes are all checked.";

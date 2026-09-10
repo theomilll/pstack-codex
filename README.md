@@ -17,27 +17,38 @@ Local checkout:
 
 ```text
 codex plugin marketplace add /path/to/pstack-codex
-codex plugin add pstack-codex@pstack-codex
+codex plugin add pstack@pstack-codex
 ```
 
 Published repo:
 
 ```text
 codex plugin marketplace add theomilll/pstack-codex
-codex plugin add pstack-codex@pstack-codex
+codex plugin add pstack@pstack-codex
 ```
+
+The plugin is named `pstack`; the repository and marketplace are named
+`pstack-codex`. Codex uses the plugin name to expose skills such as
+`$pstack:bro`, `$pstack:tdd`, and `$pstack:poteto-mode`. Install the plugin
+through the marketplace so Codex retains that namespace.
+
+If you previously installed `pstack-codex@pstack-codex`, refresh the marketplace,
+install `pstack@pstack-codex`, then remove the old plugin. If you copied PStack
+skills into your user skills directory, move those copies outside skill
+discovery after confirming the plugin loads. Keep unrelated skills in place.
+Start a new Codex task after migrating.
 
 ## Get started
 
 1. Use your preferred Codex settings.
-2. Use `$poteto-mode` for tasks that need its coding and verification workflow.
+2. Use `$pstack:poteto-mode` for tasks that need its coding and verification workflow.
 
-`$setup-pstack` is optional. It checks skill discovery and the tools needed for
+`$pstack:setup-pstack` is optional. It checks skill discovery and the tools needed for
 your task, and can help you find or create a project verification skill.
 
 New here? The
-[guide](./plugins/pstack-codex/docs/guide/README.md) walks through a first real
-task. Every `$name` in the guide is a Codex skill mention. Codex can also pick
+[guide](./plugins/pstack/docs/guide/README.md) walks through a first real
+task. Every `$pstack:name` in the guide is a Codex skill mention. Codex can also pick
 the skills implicitly when your request matches their descriptions.
 
 PStack inherits the model and reasoning effort selected in Codex. It does not
@@ -52,7 +63,7 @@ PStack does not override them or select custom agent presets.
   types become native Codex subagent workflows. The plugin does not install
   custom agents.
 - `.claude-plugin/` becomes a Codex marketplace repo with one real plugin at
-  `plugins/pstack-codex/.codex-plugin/plugin.json`.
+  `plugins/pstack/.codex-plugin/plugin.json`.
 - Per-role model configuration and model availability gates are removed.
   Codex owns model and reasoning settings; delegates inherit the parent.
 - `.claude/skills/verify-<app>/` becomes `.agents/skills/verify-<app>/`.
@@ -76,7 +87,7 @@ PStack does not override them or select custom agent presets.
 
 Everything else, including the playbook and principle content, is preserved as
 closely as the runtime allows. The exact mapping lives in
-[plugins/pstack-codex/HARNESS.md](./plugins/pstack-codex/HARNESS.md). The
+[plugins/pstack/HARNESS.md](./plugins/pstack/HARNESS.md). The
 [porting record](./PORTING.md) names the source inventory, deliberate changes,
 and acceptance checks.
 
@@ -92,7 +103,7 @@ Version 0.3.0 syncs upstream 0.15.0 with 46 skills, 23 playbooks, and 23
 principles. It adds Attack the Premise and Test Behavior, Not Implementation,
 simplifies investigation workflows, makes reflection explicit, and updates
 the writing guidance. Model specifications remain excluded. The plugin version in
-`plugins/pstack-codex/.codex-plugin/plugin.json` is this port's own line. Bump it
+`plugins/pstack/.codex-plugin/plugin.json` is this port's own line. Bump it
 whenever installed copies should pick up a change.
 
 ## Skills

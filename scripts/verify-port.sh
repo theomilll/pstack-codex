@@ -2,7 +2,7 @@
 set -euo pipefail
 
 root=$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)
-plugin="$root/plugins/pstack-codex"
+plugin="$root/plugins/pstack"
 helpers="$plugin/skills/poteto-mode/scripts"
 codex_home="${CODEX_HOME:-$HOME/.codex}"
 
@@ -23,6 +23,22 @@ expect_count() {
 python3 -m json.tool "$root/.agents/plugins/marketplace.json" >/dev/null
 python3 -m json.tool "$plugin/.codex-plugin/plugin.json" >/dev/null
 python3 -m json.tool "$plugin/hooks/hooks.json" >/dev/null
+
+python3 - "$root" <<'PY'
+import json
+import sys
+from pathlib import Path
+
+root = Path(sys.argv[1])
+marketplace = json.loads((root / ".agents/plugins/marketplace.json").read_text())
+manifest = json.loads((root / "plugins/pstack/.codex-plugin/plugin.json").read_text())
+assert marketplace["name"] == "pstack-codex", "keep the existing marketplace identity"
+assert len(marketplace["plugins"]) == 1, "expected one PStack plugin"
+entry = marketplace["plugins"][0]
+assert entry["name"] == manifest["name"] == "pstack", "skills must use the pstack: namespace"
+assert entry["source"] == {"source": "local", "path": "./plugins/pstack"}
+assert manifest["skills"] == "./skills/"
+PY
 
 expect_count skills "$(count_files "$plugin/skills" -mindepth 2 -maxdepth 2 -name SKILL.md)" 46
 expect_count playbooks "$(count_files "$plugin/skills/poteto-mode/playbooks" -maxdepth 1 -type f -name '*.md')" 23

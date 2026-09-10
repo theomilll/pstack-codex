@@ -7,7 +7,7 @@ import { fileURLToPath } from "node:url";
 // fixtures. These checks catch known regressions, not every
 // possible natural-language directive. Domain/data/mental models are valid.
 const root = resolve(process.argv[2] ?? join(dirname(fileURLToPath(import.meta.url)), ".."));
-const sources = ["README.md", "README-UPSTREAM.md", "PORTING.md", "plugins/pstack-codex"].map(path => join(root, path));
+const sources = ["README.md", "README-UPSTREAM.md", "PORTING.md", "plugins/pstack"].map(path => join(root, path));
 const extensions = /\.(?:md|json|mjs|js|ts|sh|toml|ya?ml)$/;
 const identifiers = /\b(?:gpt[- ]?\d+(?:\.\d+)*(?:[- ][a-z][a-z0-9]*(?:[.-][a-z0-9]+)*)?|claude-(?:\d|(?:fable|opus|sonnet|haiku)-)[a-z0-9.-]+|(?:grok|gemini)-\d[a-z0-9.-]*)\b/i;
 const modelNames = "(?:Claude(?: +(?:Fable|Opus|Sonnet|Haiku))?|Fable|Opus|Sonnet|Haiku|Gemini|Composer|Grok|Sol|Astra)";

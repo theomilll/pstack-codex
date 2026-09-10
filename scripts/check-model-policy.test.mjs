@@ -10,7 +10,7 @@ const scanner = fileURLToPath(new URL("./check-model-policy.mjs", import.meta.ur
 const dir = mkdtempSync(join(tmpdir(), "pstack-model-policy-"));
 after(() => rmSync(dir, { recursive: true, force: true }));
 
-function scan(text, path = "plugins/pstack-codex/skills/example/SKILL.md") {
+function scan(text, path = "plugins/pstack/skills/example/SKILL.md") {
 	const root = mkdtempSync(join(dir, "case-"));
 	const file = join(root, path);
 	mkdirSync(dirname(file), { recursive: true });
@@ -76,7 +76,7 @@ test("scanner rejects named examples in shipped guides and provenance", () => {
 		assert.equal(attribution.status, 0, attribution.output);
 	}
 	assert.equal(scan("Select your model in Codex, such as GPT-6 Astra.", "README.md").status, 1);
-	assert.equal(scan("Select your model in Codex, such as GPT-6 Astra.", "plugins/pstack-codex/docs/guide/01-setup.md").status, 1);
+	assert.equal(scan("Select your model in Codex, such as GPT-6 Astra.", "plugins/pstack/docs/guide/01-setup.md").status, 1);
 	assert.equal(scan("Use GPT-6 Astra for this task.").status, 1);
 });
 

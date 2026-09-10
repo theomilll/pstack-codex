@@ -17,21 +17,21 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 
 | pstack need | Claude port | Codex |
 |---|---|---|
-| Skill router | `/pstack:<name>` | `$<name>` for explicit invocation, or implicit skill matching from `description`. |
-| Plugin install | `/plugin marketplace add ...` | `codex plugin marketplace add <source>` then `codex plugin add pstack-codex@pstack-codex`. |
-| Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json`. This repo is a marketplace root; the installed plugin lives at `plugins/pstack-codex/`. |
+| Skill router | `/pstack:<name>` | `$pstack:<name>` for explicit invocation, or implicit skill matching from `description`. |
+| Plugin install | `/plugin marketplace add ...` | `codex plugin marketplace add <source>` then `codex plugin add pstack@pstack-codex`. |
+| Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json`. This repo is a marketplace root; the installed plugin lives at `plugins/pstack/`. |
 | Startup reminder | `hooks/hooks.json` `SessionStart` | Same file name. Match `startup`, `resume`, `clear`, and `compact`. |
 | Spawn a child | `Agent` + `subagent_type` | Use Codex's native subagent tools, such as `spawn_agent`. The plugin does not install agent types. |
 | Read-only child | `pstack:read-only` | Use a no-edit brief and available permission restrictions without selecting a custom agent preset that changes execution settings. |
-| Writing child | `pstack:poteto-agent` or `general-purpose` | Spawn a normal Codex subagent and tell it to use `$poteto-mode` or the relevant routed skill. |
+| Writing child | `pstack:poteto-agent` or `general-purpose` | Spawn a normal Codex subagent and tell it to use `$pstack:poteto-mode` or the relevant routed skill. |
 | Resume or steer a child | `SendMessage` | Use the host's native follow-up or message tool, such as `followup_task` or `send_message`. Inspect with `list_agents`, stop with `interrupt_agent`, and await with `wait_agent` when exposed. |
 | Execution settings | Model aliases and role-specific reasoning | Inherit the model and reasoning effort selected in Codex. Omit per-spawn overrides. |
-| Setup | Per-role configuration in global rules | Optional `$setup-pstack` checks skill discovery and task-relevant tools. It never edits global Codex configuration. |
+| Setup | Per-role configuration in global rules | Optional `$pstack:setup-pstack` checks skill discovery and task-relevant tools. It never edits global Codex configuration. |
 | Worktree isolation | `isolation: "worktree"` | Codex subagents share the workspace. The coordinator creates one Git worktree per concurrent writer before spawning and includes the exact path in its brief. |
 | Ask the human | `AskUserQuestion` | Use the host's structured user-input tool when available; otherwise ask one concise question for a real product, preference, or irreversible choice. |
 | Wake / recurring | Claude `/loop` | Use Codex's native wake mechanism: heartbeat automation in the app, or a bounded watcher task that rechecks a concrete predicate. |
 | Skill authoring | Claude skills reference | Codex skills reference. A skill is a directory with `SKILL.md` and optional `scripts/`, `references/`, and `assets/`. |
-| Code cleanup | Claude `/simplify` | Do the simplification pass yourself before commit. Keep `$no-comments` before review and `$unslop` for prose. |
+| Code cleanup | Claude `/simplify` | Do the simplification pass yourself before commit. Keep `$pstack:no-comments` before review and `$pstack:unslop` for prose. |
 | Drive the real surface | verification skill or Claude Chrome | verification skill first. Without one, use the shell for CLI surfaces and the available browser or computer-use tools for UI surfaces. |
 | Skill directories | `.claude/skills/`, `~/.claude/skills/` | Project `.agents/skills/`, user `$HOME/.agents/skills/`, and plugin `skills/`. |
 | Transcripts | `~/.claude/projects/<slug>/...` | Native task inspection first. If you must read a local transcript, search only for the exact current thread id under `${CODEX_HOME:-$HOME/.codex}/sessions/` and verify the opening user prompt matches. Never glob unrelated sessions. |
@@ -47,7 +47,7 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 
 Use these contracts unless a playbook says otherwise.
 
-- Code-writing delegates. Spawn a Codex subagent. Point it at `$poteto-mode` or
+- Code-writing delegates. Spawn a Codex subagent. Point it at `$pstack:poteto-mode` or
   the relevant routed skill. Give it a bounded brief, explicit acceptance
   checks, and its own worktree if another writer could touch the same tree.
 - Read-only explorers, judges, critics, and verifiers. Spawn a subagent with an
