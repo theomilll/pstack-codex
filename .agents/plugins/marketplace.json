@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "pstack-codex",
+      "name": "pstack",
       "source": {
         "source": "local",
-        "path": "./plugins/pstack-codex"
+        "path": "./plugins/pstack"
       },
       "policy": {
         "installation": "AVAILABLE",

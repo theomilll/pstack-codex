@@ -1,6 +1,6 @@
 # Steer with principle names
 
-pstack ships 23 principles as individual skills. `$poteto-mode` applies the ones the task triggers and names the principles whose leaf instructions it actually read, along with the decision each changed.
+pstack ships 23 principles as individual skills. `$pstack:poteto-mode` applies the ones the task triggers and names the principles whose leaf instructions it actually read, along with the decision each changed.
 
 You don't invoke principles. You use their names to steer. Each name points at a complete rule the agent has already read, so one phrase redirects the work more precisely than a paragraph of instructions.
 

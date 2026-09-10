@@ -56,7 +56,7 @@ The repository is a Codex marketplace with one plugin:
 
 ```text
 .agents/plugins/marketplace.json
-plugins/pstack-codex/
+plugins/pstack/
   .codex-plugin/plugin.json
   hooks/hooks.json
   skills/
@@ -81,10 +81,10 @@ does not declare that path separately.
 | `/simplify` | A deliberate diff-simplification pass |
 | `.claude/skills` | Project `.agents/skills` |
 | Claude transcript paths | Native task inspection, then exact current-thread lookup only |
-| Claude global rules | Removed; optional `$setup-pstack` checks skill discovery and task-relevant tools without writing global configuration |
+| Claude global rules | Removed; optional `$pstack:setup-pstack` checks skill discovery and task-relevant tools without writing global configuration |
 
 The full operational table is in
-[`plugins/pstack-codex/HARNESS.md`](./plugins/pstack-codex/HARNESS.md).
+[`plugins/pstack/HARNESS.md`](./plugins/pstack/HARNESS.md).
 
 ## Architecture decision
 
