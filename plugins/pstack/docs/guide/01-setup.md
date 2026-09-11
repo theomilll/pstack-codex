@@ -12,7 +12,9 @@ codex plugin marketplace add theomilll/pstack-codex
 codex plugin add pstack@pstack-codex
 ```
 
-Codex confirms the plugin is installed. Skills invoke explicitly as `$pstack:poteto-mode`. The `$` is only needed when you want to force a specific skill instead of letting routing happen implicitly.
+Codex confirms the plugin is installed. Invoke skills explicitly, for example
+`$pstack:poteto-mode`. PStack does not activate from ordinary requests. Once
+invoked, Poteto mode routes work through its referenced skills and playbooks.
 
 ## Optionally check readiness
 

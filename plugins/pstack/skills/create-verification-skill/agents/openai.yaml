@@ -1,0 +1,5 @@
+interface:
+  display_name: "Create a verification skill"
+  short_description: "Create a skill that drives and verifies the real app"
+policy:
+  allow_implicit_invocation: false

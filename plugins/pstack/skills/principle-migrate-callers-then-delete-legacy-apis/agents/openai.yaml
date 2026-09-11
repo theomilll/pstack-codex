@@ -1,0 +1,5 @@
+interface:
+  display_name: "Migrate Callers Then Delete Legacy APIs"
+  short_description: "Migrate callers and remove the old API together"
+policy:
+  allow_implicit_invocation: false

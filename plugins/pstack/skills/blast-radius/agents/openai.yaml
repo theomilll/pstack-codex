@@ -1,0 +1,5 @@
+interface:
+  display_name: "Blast radius"
+  short_description: "Check what a change could break beyond its own diff"
+policy:
+  allow_implicit_invocation: false

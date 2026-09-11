@@ -1,0 +1,5 @@
+interface:
+  display_name: "No comments"
+  short_description: "Review code comments and remove unnecessary ones"
+policy:
+  allow_implicit_invocation: false

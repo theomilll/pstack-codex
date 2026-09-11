@@ -1,0 +1,5 @@
+interface:
+  display_name: "Make Operations Idempotent"
+  short_description: "Make repeated operations converge to the same state"
+policy:
+  allow_implicit_invocation: false

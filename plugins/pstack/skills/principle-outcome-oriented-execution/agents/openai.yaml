@@ -1,0 +1,5 @@
+interface:
+  display_name: "Outcome-Oriented Execution"
+  short_description: "Converge on the intended migration architecture"
+policy:
+  allow_implicit_invocation: false

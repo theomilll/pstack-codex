@@ -17,10 +17,10 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 
 | pstack need | Claude port | Codex |
 |---|---|---|
-| Skill router | `/pstack:<name>` | `$pstack:<name>` for explicit invocation, or implicit skill matching from `description`. |
+| Skill router | `/pstack:<name>` | `$pstack:<name>` for explicit invocation. An invoked workflow can load its referenced skills and playbooks. |
 | Plugin install | `/plugin marketplace add ...` | `codex plugin marketplace add <source>` then `codex plugin add pstack@pstack-codex`. |
 | Plugin manifest | `.claude-plugin/plugin.json` | `.codex-plugin/plugin.json`. This repo is a marketplace root; the installed plugin lives at `plugins/pstack/`. |
-| Startup reminder | `hooks/hooks.json` `SessionStart` | Same file name. Match `startup`, `resume`, `clear`, and `compact`. |
+| Startup reminder | `hooks/hooks.json` `SessionStart` | Removed. `hooks/hooks.json` contains an empty hooks object so startup and resume do not activate PStack. |
 | Spawn a child | `Agent` + `subagent_type` | Use Codex's native subagent tools, such as `spawn_agent`. The plugin does not install agent types. |
 | Read-only child | `pstack:read-only` | Use a no-edit brief and available permission restrictions without selecting a custom agent preset that changes execution settings. |
 | Writing child | `pstack:poteto-agent` or `general-purpose` | Spawn a normal Codex subagent and tell it to use `$pstack:poteto-mode` or the relevant routed skill. |
@@ -41,7 +41,7 @@ Claude transcript paths, and Claude `/loop` instructions are gone.
 | Plugin files at runtime | installed Claude cache path | `<pstack root>` means the installed Codex plugin root. Read files relative to it. Do not assume a hard-coded cache directory. |
 | Plugin logo | `.cursor-plugin/plugin.json` `logo` | `.codex-plugin/plugin.json` `interface.logo`. Path is plugin-root-relative and starts with `./`. |
 | Skill path filter | Cursor `paths` frontmatter | Not shipped. Codex skill frontmatter is `name` and `description` only. |
-| Disable model invocation | Cursor `disable-model-invocation` frontmatter | Not shipped. Codex skills stay matchable from `description`. |
+| Disable model invocation | Cursor `disable-model-invocation` frontmatter | `policy.allow_implicit_invocation: false` in each skill's `agents/openai.yaml`. All bundled skills are explicit-only. |
 
 ## Default delegation shape
 
@@ -78,5 +78,4 @@ The GitHub PR watcher retains support for Cursor Bugbot automation markers becau
 
 ## Pending upstream mappings
 
-- `73f8be4` `pstack/skills/{how,make-bot-ui,typescript-best-practices,unslop,why}/SKILL.md`: Cursor `disable-model-invocation`. Codex has no equivalent skill switch. Retained: existing `name` and `description` frontmatter only. `make-bot-ui` is not in this port.
 - `23a56e2` `pstack/skills/typescript-best-practices/SKILL.md`: Cursor `paths: ["**/*.ts", "**/*.tsx"]`. Codex skill frontmatter has no path-scoped invocation. Retained: the TypeScript rule prose, including schemas-before-guards.

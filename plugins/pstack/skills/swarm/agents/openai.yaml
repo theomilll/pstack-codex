@@ -1,0 +1,5 @@
+interface:
+  display_name: "Swarm"
+  short_description: "Coordinate parallel workers and combine their findings"
+policy:
+  allow_implicit_invocation: false

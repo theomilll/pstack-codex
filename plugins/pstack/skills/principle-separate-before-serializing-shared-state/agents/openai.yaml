@@ -1,0 +1,5 @@
+interface:
+  display_name: "Separate Before Serializing Shared State"
+  short_description: "Separate concurrent writers before adding coordination"
+policy:
+  allow_implicit_invocation: false

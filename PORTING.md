@@ -37,6 +37,11 @@ outside this update. Helper executable code is unchanged upstream.
 
 ## Source inventory
 
+Port version 0.3.3 makes every bundled skill explicit-only through
+`agents/openai.yaml` and removes the automatic startup reminder. Explicitly
+invoked workflows still load their referenced skills and playbooks. This is a
+deliberate invocation-policy change; the workflow content is preserved.
+
 The source checkout was clean before the port. Its tracked distribution
 contained:
 
@@ -48,7 +53,8 @@ contained:
 - three Claude agent definitions and one startup hook
 
 The Codex distribution preserves the skills, playbooks, principles, guide,
-hook intent, and helpers. It does not ship the Claude agent definitions.
+and helpers. It does not ship the Claude agent definitions or activate PStack
+through a startup hook.
 
 ## Package shape
 
@@ -64,7 +70,7 @@ plugins/pstack/
 ```
 
 Codex discovers the plugin's skills from its declared `skills` directory. The
-hook stays at the conventional `hooks/hooks.json` path. The installed Codex
+empty hook registry stays at the conventional `hooks/hooks.json` path. The installed Codex
 plugin schema currently rejects a `hooks` key in `plugin.json`, so the manifest
 does not declare that path separately.
 
@@ -120,8 +126,9 @@ README. It no longer embeds the upstream model policy.
 
 ## Acceptance checks
 
-`scripts/verify-port.sh` checks the package manifest, marketplace entry, hook,
-all 46 skill manifests, the 23 playbooks, the 23 principles, guide and helper
+`scripts/verify-port.sh` checks the package manifest, marketplace entry, empty
+hook registry, all 46 skill manifests and their explicit-only invocation policies,
+the 23 playbooks, the 23 principles, guide and helper
 counts, forbidden Claude contracts, the shell helper, Bun tests, and TypeScript
 types. Regression checks reject fixed model identifiers and known model
 availability, routing, and execution-override patterns in operational content.

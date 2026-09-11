@@ -1,0 +1,5 @@
+interface:
+  display_name: "Show me your work"
+  short_description: "Keep an auditable record of decisions and evidence"
+policy:
+  allow_implicit_invocation: false

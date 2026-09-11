@@ -48,8 +48,11 @@ your task, and can help you find or create a project verification skill.
 
 New here? The
 [guide](./plugins/pstack/docs/guide/README.md) walks through a first real
-task. Every `$pstack:name` in the guide is a Codex skill mention. Codex can also pick
-the skills implicitly when your request matches their descriptions.
+task. Every `$pstack:name` in the guide is a Codex skill mention. All PStack skills
+require explicit invocation. Ordinary requests do not activate PStack, and there
+is no startup reminder that activates Poteto mode. Once you invoke
+`$pstack:poteto-mode`, it can load the skills and playbooks its workflow calls for
+and stays active in that conversation until you opt out.
 
 PStack inherits the model and reasoning effort selected in Codex. It does not
 choose models, assign execution settings by role, check model availability, or
@@ -79,8 +82,9 @@ PStack does not override them or select custom agent presets.
 
 ## Compatibility
 
-- Cursor `disable-model-invocation` is not shipped. Codex skills stay matchable
-  from `description`.
+- Automatic skill invocation is disabled for every bundled skill using
+  `policy.allow_implicit_invocation: false` in `agents/openai.yaml`, Codex's
+  equivalent of Cursor's `disable-model-invocation`. Explicit mentions still work.
 - Cursor skill `paths` frontmatter is not shipped. Codex skill frontmatter is
   `name` and `description` only.
 - The upstream plugin logo maps to Codex `interface.logo`.
@@ -98,6 +102,9 @@ Run the complete local verification with:
 ```
 
 ## Versioning
+
+Version 0.3.3 makes all 46 skills explicit-only and removes the automatic startup
+reminder. Verification checks enforce this policy for every bundled skill.
 
 Version 0.3.0 syncs upstream 0.15.0 with 46 skills, 23 playbooks, and 23
 principles. It adds Attack the Premise and Test Behavior, Not Implementation,

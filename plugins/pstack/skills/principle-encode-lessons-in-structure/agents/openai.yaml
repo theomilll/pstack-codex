@@ -1,0 +1,5 @@
+interface:
+  display_name: "Encode Lessons in Structure"
+  short_description: "Turn recurring lessons into enforceable checks"
+policy:
+  allow_implicit_invocation: false

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Arena"
+  short_description: "Compare parallel candidates and combine the best parts"
+policy:
+  allow_implicit_invocation: false

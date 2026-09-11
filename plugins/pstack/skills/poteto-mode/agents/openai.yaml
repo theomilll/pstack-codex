@@ -1,0 +1,5 @@
+interface:
+  display_name: "Poteto mode"
+  short_description: "Run the PStack coding and verification workflow"
+policy:
+  allow_implicit_invocation: false

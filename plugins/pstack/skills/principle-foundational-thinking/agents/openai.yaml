@@ -1,0 +1,5 @@
+interface:
+  display_name: "Foundational Thinking"
+  short_description: "Choose core data structures before writing logic"
+policy:
+  allow_implicit_invocation: false

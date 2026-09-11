@@ -1,0 +1,5 @@
+interface:
+  display_name: "Recall"
+  short_description: "Recover relevant context from previous work"
+policy:
+  allow_implicit_invocation: false

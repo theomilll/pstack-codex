@@ -1,0 +1,5 @@
+interface:
+  display_name: "Teach"
+  short_description: "Explain how the code works and why it was designed so"
+policy:
+  allow_implicit_invocation: false

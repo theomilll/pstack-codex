@@ -1,0 +1,5 @@
+interface:
+  display_name: "TDD Bug Fix"
+  short_description: "Write a failing test, then implement the fix"
+policy:
+  allow_implicit_invocation: false

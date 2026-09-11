@@ -1,0 +1,5 @@
+interface:
+  display_name: "Test Behavior, Not Implementation"
+  short_description: "Test observable behavior through real entry points"
+policy:
+  allow_implicit_invocation: false

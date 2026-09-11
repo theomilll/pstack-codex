@@ -28,6 +28,7 @@ python3 - "$root" <<'PY'
 import json
 import sys
 from pathlib import Path
+import yaml
 
 root = Path(sys.argv[1])
 marketplace = json.loads((root / ".agents/plugins/marketplace.json").read_text())
@@ -38,6 +39,11 @@ entry = marketplace["plugins"][0]
 assert entry["name"] == manifest["name"] == "pstack", "skills must use the pstack: namespace"
 assert entry["source"] == {"source": "local", "path": "./plugins/pstack"}
 assert manifest["skills"] == "./skills/"
+plugin = root / "plugins/pstack"
+assert json.loads((plugin / "hooks/hooks.json").read_text()) == {"hooks": {}}, "PStack must not auto-activate through hooks"
+for skill in (plugin / "skills").glob("*/SKILL.md"):
+    metadata = yaml.safe_load((skill.parent / "agents/openai.yaml").read_text())
+    assert metadata.get("policy", {}).get("allow_implicit_invocation") is False, f"{skill.parent.name} must require explicit invocation"
 PY
 
 expect_count skills "$(count_files "$plugin/skills" -mindepth 2 -maxdepth 2 -name SKILL.md)" 46
@@ -76,26 +82,6 @@ node --test "$root/scripts/check-model-policy.test.mjs" "$root/scripts/check-pla
 node "$root/scripts/check-model-policy.mjs" "$root"
 
 bash -n "$helpers/worktree-audit.sh"
-
-hook_command=$(python3 - "$plugin/hooks/hooks.json" <<'PY'
-import json
-import sys
-
-with open(sys.argv[1], encoding="utf-8") as handle:
-    payload = json.load(handle)
-hooks = payload["hooks"]["SessionStart"]
-assert len(hooks) == 1
-assert hooks[0]["matcher"] == "startup|resume|clear|compact"
-commands = hooks[0]["hooks"]
-assert len(commands) == 1 and commands[0]["type"] == "command"
-print(commands[0]["command"])
-PY
-)
-hook_output=$(sh -c "$hook_command")
-case "$hook_output" in
-	*pstack-codex*) ;;
-	*) fail 'startup hook did not emit the pstack-codex reminder' ;;
-esac
 
 (
 	cd "$helpers"

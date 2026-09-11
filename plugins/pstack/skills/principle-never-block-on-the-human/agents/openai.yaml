@@ -1,0 +1,5 @@
+interface:
+  display_name: "Never Block on the Human"
+  short_description: "Proceed autonomously with authorized reversible work"
+policy:
+  allow_implicit_invocation: false

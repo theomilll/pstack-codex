@@ -1,0 +1,5 @@
+interface:
+  display_name: "Model the Domain"
+  short_description: "Represent domain rules directly in data structures"
+policy:
+  allow_implicit_invocation: false

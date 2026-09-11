@@ -1,0 +1,5 @@
+interface:
+  display_name: "Why"
+  short_description: "Investigate the evidence behind design decisions"
+policy:
+  allow_implicit_invocation: false

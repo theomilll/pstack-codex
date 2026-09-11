@@ -1,0 +1,5 @@
+interface:
+  display_name: "Laziness Protocol"
+  short_description: "Prefer the smallest change that solves the problem"
+policy:
+  allow_implicit_invocation: false

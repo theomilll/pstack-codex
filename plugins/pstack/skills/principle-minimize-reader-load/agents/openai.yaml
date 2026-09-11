@@ -1,0 +1,5 @@
+interface:
+  display_name: "Minimize Reader Load"
+  short_description: "Reduce the effort required to understand code"
+policy:
+  allow_implicit_invocation: false

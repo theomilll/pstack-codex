@@ -1,0 +1,5 @@
+interface:
+  display_name: "How"
+  short_description: "Trace how the code and its components work"
+policy:
+  allow_implicit_invocation: false

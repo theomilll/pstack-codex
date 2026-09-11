@@ -1,0 +1,5 @@
+interface:
+  display_name: "TypeScript best practices"
+  short_description: "Apply practical TypeScript type and design guidance"
+policy:
+  allow_implicit_invocation: false

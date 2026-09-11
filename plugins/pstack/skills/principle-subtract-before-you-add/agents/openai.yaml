@@ -1,0 +1,5 @@
+interface:
+  display_name: "Subtract Before You Add"
+  short_description: "Remove obsolete code before adding new behavior"
+policy:
+  allow_implicit_invocation: false

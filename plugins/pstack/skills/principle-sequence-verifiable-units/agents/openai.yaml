@@ -1,0 +1,5 @@
+interface:
+  display_name: "Sequence work into verifiable units"
+  short_description: "Break work into units with observable checks"
+policy:
+  allow_implicit_invocation: false

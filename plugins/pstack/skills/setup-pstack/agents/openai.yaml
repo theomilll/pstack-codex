@@ -1,0 +1,5 @@
+interface:
+  display_name: "Setup pstack"
+  short_description: "Check PStack skill discovery and required tools"
+policy:
+  allow_implicit_invocation: false

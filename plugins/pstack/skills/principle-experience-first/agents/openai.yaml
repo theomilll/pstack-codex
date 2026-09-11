@@ -1,0 +1,5 @@
+interface:
+  display_name: "Experience First"
+  short_description: "Prioritize the user experience in product decisions"
+policy:
+  allow_implicit_invocation: false

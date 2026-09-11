@@ -1,0 +1,5 @@
+interface:
+  display_name: "Exhaust the Design Space"
+  short_description: "Compare concrete alternatives before choosing a design"
+policy:
+  allow_implicit_invocation: false

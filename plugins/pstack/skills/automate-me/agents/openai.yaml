@@ -1,0 +1,5 @@
+interface:
+  display_name: "Automate me"
+  short_description: "Capture your working preferences in a reusable skill"
+policy:
+  allow_implicit_invocation: false

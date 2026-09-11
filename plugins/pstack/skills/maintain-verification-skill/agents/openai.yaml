@@ -1,0 +1,5 @@
+interface:
+  display_name: "Maintain a verification skill"
+  short_description: "Keep app verification skills and feature maps current"
+policy:
+  allow_implicit_invocation: false

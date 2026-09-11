@@ -1,0 +1,5 @@
+interface:
+  display_name: "Build the Lever"
+  short_description: "Build a reusable tool to perform or verify the work"
+policy:
+  allow_implicit_invocation: false

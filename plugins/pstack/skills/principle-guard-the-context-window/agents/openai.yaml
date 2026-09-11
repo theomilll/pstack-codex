@@ -1,0 +1,5 @@
+interface:
+  display_name: "Guard the Context Window"
+  short_description: "Keep working context focused during large tasks"
+policy:
+  allow_implicit_invocation: false

@@ -42,9 +42,12 @@ $pstack:tdd implement
 
 In context, that's enough. [`$pstack:tdd`](../../skills/tdd/SKILL.md) writes the smallest test that fails for the intended reason, then the fix, then reruns the test. If a test would need broad harness setup or brittle mocks, the skill says so and uses the closest executable check instead. Don't force a test where a real command is stronger evidence.
 
-## Let the TypeScript rules load themselves
+## Invoke the TypeScript rules
 
-[`typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md) usually applies implicitly whenever the agent touches a `.ts` or `.tsx` file. It turns the type-system principles into concrete rules: discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types.
+Invoke [`$pstack:typescript-best-practices`](../../skills/typescript-best-practices/SKILL.md)
+when you want its TypeScript guidance. Editing a `.ts` or `.tsx` file alone does
+not activate it. It turns the type-system principles into concrete rules:
+discriminated unions, `unknown` at boundaries, exhaustive variants, schema-derived types.
 
 ## Clean before you commit
 

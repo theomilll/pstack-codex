@@ -1,0 +1,5 @@
+interface:
+  display_name: "Technical writing"
+  short_description: "Write clear tutorials, guides, and technical explanations"
+policy:
+  allow_implicit_invocation: false

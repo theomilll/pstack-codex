@@ -1,0 +1,5 @@
+interface:
+  display_name: "Type System Discipline"
+  short_description: "Express domain constraints through precise types"
+policy:
+  allow_implicit_invocation: false
